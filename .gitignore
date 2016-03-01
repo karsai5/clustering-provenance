@@ -1,0 +1,9 @@
+# Ignore temporary files.
+*.swp
+*.aux
+*.blg
+*.log
+*.out
+*.pdf
+*.toc
+*.bbl
