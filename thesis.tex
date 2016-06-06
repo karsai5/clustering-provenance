@@ -1,28 +1,57 @@
 \documentclass[BIT, graphvis, a4paper]{usydthesis}
+
+\usepackage[final]{pdfpages} 
+\usepackage[toc,page]{appendix}
 \usepackage[utf8]{inputenc}
 \usepackage{amsfonts}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{caption} 
 \usepackage{chngpage}
 \usepackage{float}
+\usepackage{framed}
 \usepackage{fullpage}
 \usepackage{graphicx}
-\usepackage{natbib}
-\usepackage{tabularx} 
 \usepackage{hyperref} 
+\usepackage{listings} 
+\usepackage{natbib}
+\usepackage{subcaption} 
+\usepackage{tabularx} 
+\usepackage{tabu} 
 \usepackage{tikz} 
 \usepackage{url}
-\usepackage{caption} 
-\usepackage{subcaption} 
 \usepackage{wrapfig} 
+
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes,snakes}
+\usetikzlibrary{positioning,calc}
 \DeclareUnicodeCharacter{00A0}{ }
 \newcommand*\rot{\rotatebox{90}}
+\makeatletter
+\newcommand{\@chapapp}{\relax}%
+\makeatother
 \graphicspath{ {images/} }
-
-\title{Literature Review}
-
 \setlength{\parskip}{\baselineskip}%
 \setlength{\parindent}{0pt}%
+% graph settings
+\definecolor{nodeyellow}{RGB}{255,252,135}
+\definecolor{nodeblue}{RGB}{179,255,255}
+\tikzset{
+	every node/.style={font=\sffamily\scriptsize}
+}
+\tikzset{
+	group/.style={font=\sffamily,fill=nodeblue}
+}
+\tikzset{
+	->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+	thick,main node/.style={ellipse,fill=nodeyellow,draw,font=\sffamily\normalsize}
+}
+
+% give captions a bit of space.
+\captionsetup[sub]{margin=5pt, skip=10pt}
+
+
+\title{Clustring Provenance}
 
 \begin{document}
 \author{Linus Karsai}
@@ -33,59 +62,36 @@
 % reset the page numbering and change to arabic numbers
 \newpage\setcounter{page}{1}\pagenumbering{arabic}
 
-\chapter{Technical Decisions}
+\include{header}
 
-Find below reasoning for my technical decisions. If you want to discuss one of these decisions further or something not mentioned don't hesitate to contact me. A basic level of web development competency is assumed in these technical explanations.
+\include{summary}
 
-\section{Deployment Platform}
-\label{sec:platform}
+\include{body}
 
-The current primary user base for a provenance visualiser would be researchers and developers. Following this reasoning I wanted to create my prototype that it is easy accessible to the widest range of researchers with the smallest amount of effort on their behalf. I decided to create a web application so that no installation is required client side just a modern web browser. 
+\include{usability-plan}
 
-I had two primary concerns in creating a web application opposed to a native application. Firstly is the problem of scale: provenance files can be so large that they quickly start using vast resources in processing/viewing them. Because my prototype is meant only as a guide for creating provenance exploration interfaces I argue that it's not a requirement to render enormously large graphs. This is an interesting field of future research as browsers are slowly gaining more direct access to hardware and high performance applications may be feasible. 
+\include{technical-decisions}
 
-My second concern is that of bandwidth and server resources. Currently the prototype website is hosted on one of the cheapest digital ocean plans \footnote{I'm currently using the smallest sized droplet at \url{www.digitalocean.com}} so server side resources are limited. I've overcome this by having all computational work committed client side, an issue discussed further below.
+\chapter{Discussion and Conclusions}
 
-\subsection{Web Technologies}
-\label{sub:web_technologies}
-
-The standard technology for data visualisation in the browser is D3.js\footnote{D3: Data Driven Documents \url{https://d3js.org/}}. Whilst been highly flexible D3 is for arbitrary SVGs, which means a renderer and interaction model would have to be programmed myself. In the interest of time I decided instead to use a framework called Cytoscape.js\footnote{Cytoscape, graph theory framework: \url{http://js.cytoscape.org/}}. 
-
-Cytoscape.js is a JavaScript library focused on graph theory and has a built in renderer, gestures and events. It's also (at the time) in active development and open source. If a more in-depth application was to be made in the future it would be worth investigating the feasibility of writing it from scratch using D3. There's other frameworks that are similar to Cytoscape however the active development, open source code and graph focus made my chose Cytoscape.
-
-\section{Client Side Processing}
-\label{sec:client_side_processing}
-
-As mentioned before, provenance files have the ability to be quite large. Normally when a user selects a file for a web application the following happens:
-
-User selects file via a file dialog $\rightarrow$ file is uploaded to application server $\rightarrow$ server side processing takes place $\rightarrow$ file-related information is shown to the user client side
-
-As my application doesn't do any server-side processing or saving I had to find a way to load the file client side. To do this I use the FileReader API\footnote{Specification for the FileReader API are available at the w3 website \url{https://www.w3.org/TR/FileAPI/\#dfn-filereader}}. Available now in nearly all modern browsers\footnote{You can check which browsers support a feature at the following website: \url{http://caniuse.com/\#feat=filereader}}, this allows me to have the user select a file locally and then read the contents of that file with JavaScript.
-
-\section{Clustering}
-\label{sec:clustering}
-
-Clustering (the process of converting multiple nodes into one composite node) is not a feature available in Cytoscape.
-
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.5\textwidth}
-    \includegraphics[width=\textwidth]{ungrouped}
-    \caption{Graph with no composite nodes}
-  \end{subfigure}
-  ~
-  \begin{subfigure}[b]{0.5\textwidth}
-    \includegraphics[width=\textwidth]{grouped}
-    \caption{Same graph with a composite node}
-  \end{subfigure}
-\caption{An example of a composite node containing the \textit{Tweets}, \textit{X-tweets-1}, \textit{X-tweets-2} and \textit{X-tweets-3} nodes.}
-\end{figure}
-
-The important thing here is that grouping is non-destructive: A composite node can be \textit{un-grouped} and the resulting graph must be isomorphic to the original. Whilst isomorphism conceptually implied when you imagine grouping nodes and un-grouping them, it's not as easy when visually representing the nodes as you have to destroy/create/move nodes in order to create a composite.
+\chapter{Acknowledgments}
 
 \include{litreview}
 
-\bibliography{bibliography}
+\bibliography{bibliography,bibliography_PM}
 \bibliographystyle{plain}
+
+\begin{appendices}
+	\renewcommand{\thesection}{\appendixname~\Alph{section}}
+
+	\section{Provenance Primer}
+	\label{pdf:prov-primer}
+	\includepdf[pages=-,frame=true,width=\linewidth]{pdfs/provenance-primer.pdf}
+
+	\includepdf[pages=-,frame=true,width=\linewidth,pagecommand=\section{Interview Questionnaire}]{pdfs/questionnaire.pdf}
+
+\end{appendices}
+
+
 
 \end{document}

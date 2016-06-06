@@ -6,7 +6,7 @@
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{usydthesis}
-  [2002/05/10 University of Sydney thesis class file - Andrew Mathas]
+[2002/05/10 University of Sydney thesis class file - Andrew Mathas]
 
 % options %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -25,19 +25,19 @@
 \def\@thesistype{An essay}
 \def\@degree{something cool}
 \DeclareOption{BA}{\def\@thesistype{An essay}
-                   \def\@degree{B.A.~(Honours)}
+  \def\@degree{B.A.~(Honours)}
 }
 \DeclareOption{BSc}{\def\@thesistype{An essay}
-                    \def\@degree{B.Sc.~(Honours)}
+  \def\@degree{B.Sc.~(Honours)}
 }
 \DeclareOption{MA}{\def\@thesistype{A thesis}
-                    \def\@degree{Master of Arts}
+  \def\@degree{Master of Arts}
 }
 \DeclareOption{MSc}{\def\@thesistype{A thesis}
-                    \def\@degree{Master of Science}
+  \def\@degree{Master of Science}
 }
 \DeclareOption{PhD}{\def\@thesistype{A thesis}
-                    \def\@degree{Doctor of Philosophy}
+  \def\@degree{Doctor of Philosophy}
 }
 \DeclareOption{BIT}{\def\@thesistype{A thesis}
   \def\@degree{B.I.T (Honours)}
@@ -67,9 +67,9 @@
 
 % times fonts look better
 \ifSMStimes
-  \usepackage{times}
-  \usepackage[T1]{fontenc}
-  \usepackage{textcomp}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
 \fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -83,7 +83,7 @@
 \def\chapter{%
   \clearpage
   \thispagestyle{plain}\global\@topnum\z@
-  \@afterindenttrue \secdef\@chapter\@schapter}
+\@afterindenttrue \secdef\@chapter\@schapter}
 
 % section numbers in appendices shouldn't have a dot in them
 \def\appendix{\par
@@ -95,42 +95,42 @@
 
 \ifBook\relax
 \else
- %%put dotfill in toc entries and make chapter entries bold 
-  \def\contentsname{\normalfont\scshape{Contents}}
-  \def\@tocline#1#2#3#4#5#6#7{\relax
+%%put dotfill in toc entries and make chapter entries bold 
+\def\contentsname{\normalfont\scshape{Contents}}
+\def\@tocline#1#2#3#4#5#6#7{\relax
   \ifnum #1>\c@tocdepth % then omit
   \else
-    \par \addpenalty\@secpenalty\addvspace{#2}%
-    \begingroup \hyphenpenalty\@M
-    \@ifempty{#4}{%
-      \@tempdima\csname r@tocindent\number#1\endcsname\relax
+  \par \addpenalty\@secpenalty\addvspace{#2}%
+  \begingroup \hyphenpenalty\@M
+  \@ifempty{#4}{%
+    \@tempdima\csname r@tocindent\number#1\endcsname\relax
     }{%
-      \@tempdima#4\relax
-    }%
-    \parindent\z@ \leftskip#3\relax \advance\leftskip\@tempdima\relax
-    \rightskip\@pnumwidth plus4em \parfillskip-\@pnumwidth
-    {#5\leavevmode\hskip-\@tempdima #6}\nobreak\relax
-    \dotfill\hbox to\@pnumwidth{\@tocpagenum{#5{#7}}}\par
-    \nobreak
-    \endgroup
+    \@tempdima#4\relax
+  }%
+  \parindent\z@ \leftskip#3\relax \advance\leftskip\@tempdima\relax
+  \rightskip\@pnumwidth plus4em \parfillskip-\@pnumwidth
+  {#5\leavevmode\hskip-\@tempdima #6}\nobreak\relax
+  \dotfill\hbox to\@pnumwidth{\@tocpagenum{#5{#7}}}\par
+  \nobreak
+  \endgroup
   \fi
-  }
-  \def\l@chapter{\@tocline{0}{8pt plus1pt}{0pt}{}{\bfseries}}
+}
+\def\l@chapter{\@tocline{0}{8pt plus1pt}{0pt}{}{\bfseries}}
 \fi
 
 % chapter at top of chapters should be \sc rather than in capitals
 \def\@makechapterhead#1{\global\topskip 7.5pc\relax
   \begingroup
   \fontsize{\@xivpt}{18}\bfseries\centering
-    \ifnum\c@secnumdepth>\m@ne
-      \leavevmode \hskip-\leftskip
-      \rlap{\vbox to\z@{\vss
-          \centerline{\normalsize\mdseries
-              \@xp{\scshape\chaptername}\enspace\thechapter}
-          \vskip 3pc}}\hskip\leftskip\fi
-     #1\par \endgroup
+  \ifnum\c@secnumdepth>\m@ne
+  \leavevmode \hskip-\leftskip
+  \rlap{\vbox to\z@{\vss
+      \centerline{\normalsize\mdseries
+      \@xp{\scshape\chaptername}\enspace\thechapter}
+  \vskip 3pc}}\hskip\leftskip\fi
+  #1\par \endgroup
   \skip@34\p@ \advance\skip@-\normalbaselineskip
-  \vskip\skip@ }
+\vskip\skip@ }
 
 % the standard amsbook headings are not very good %%%%
 \def\partrunhead#1#2#3{%
@@ -161,10 +161,10 @@
   \@topsep \thm@preskip               % used by thm head
   \@topsepadd \thm@postskip           % used by \@endparenv
   \def\@tempa{#2}\ifx\@empty\@tempa
-    \def\@tempa{\@oparg{\@begintheorem{#3}{}}[]}%
+  \def\@tempa{\@oparg{\@begintheorem{#3}{}}[]}%
   \else
-    \refstepcounter{#2}%
-    \def\@tempa{\@oparg{\@begintheorem{#3}{\csname the#2\endcsname}}[]}%
+  \refstepcounter{#2}%
+  \def\@tempa{\@oparg{\@begintheorem{#3}{\csname the#2\endcsname}}[]}%
   \fi
   \@tempa
 }
@@ -174,8 +174,8 @@
   \pushQED{\qed}%
   \normalfont \topsep6\p@\@plus6\p@\relax
   \trivlist
-  \itemindent\z@
-  \item[\hskip\labelsep\SMStheoremfont #1\@addpunct{.}]\ignorespaces
+\itemindent\z@
+\item[\hskip\labelsep\SMStheoremfont #1\@addpunct{.}]\ignorespaces
 }{\popQED\endtrivlist\@endpefalse}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -183,36 +183,36 @@
 % date on title page of thesis
 \def\Today{\ifcase\month\or January\or February\or March\or
   April\or May\or June\or July\or August\or September\or
-  October\or November\or December\fi\space\number\year}
+October\or November\or December\fi\space\number\year}
 
 % thesis title page
 \def\@maketitle{
   \cleardoublepage\thispagestyle{empty}%
   \begingroup \topskip\z@skip
-    \null\vfil
-    \begingroup
-    \LARGE\bfseries \centering
-    \openup\medskipamount
-    \@title\par\vspace{30pt}%
-    \centering\mdseries\authors\par\bigskip
-    \endgroup
-    \vfil\vfil\vfil
-    \begin{center}
-      \ifHandBook\relax
-      \else
-        \@thesistype\ submitted in partial fulfillment of\\
-        the requirements for the degree of\\
-        \@degree
-      \fi
+  \null\vfil
+  \begingroup
+  \LARGE\bfseries \centering
+  \openup\medskipamount
+  \@title\par\vspace{30pt}%
+  \centering\mdseries\authors\par\bigskip
+  \endgroup
+  \vfil\vfil\vfil
+  \begin{center}
+    \ifHandBook\relax
+    \else
+    \@thesistype\ submitted in partial fulfillment of\\
+    the requirements for the degree of\\
+    \@degree
+    \fi
     \vfil\vfil
-      {\large\SMSsection\\[5pt]
-      University of Sydney}\\
-      \vskip6mm
-      \includegraphics[width=18mm]{images/university_sydney_logo}
+    {\large\SMSsection\\[5pt]
+    University of Sydney}\\
+    \vskip6mm
+    \includegraphics[width=18mm]{images/university_sydney_logo}
     \vfil
-      \normalsize\Today
-    \end{center}
-    \vfil
+    \normalsize\Today
+  \end{center}
+  \vfil
   \endgroup
   \cleardoublepage
 }
@@ -227,24 +227,50 @@
   \c@chapter\z@ \c@section\z@\let\chaptername\relax
   \chapter*{References}\list
   {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
-  \advance\leftmargin\labelsep
+    \advance\leftmargin\labelsep
   \itemsep\z@\parsep\z@\topsep\z@\parskip\z@
   \usecounter{enumi}}
   \def\newblock{\hskip .11em plus .33em minus .07em}
   \sloppy\clubpenalty4000\widowpenalty4000
-  \sfcode`\.=1000\relax}
+\sfcode`\.=1000\relax}
 
 % global macros %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % a good macros for doing sets: e.g. $\set{x|x>0}$.
 {\catcode`\|=\active
   \gdef\set#1{\mathinner{\lbrace\,{\mathcode`\|"8000%
-                                   \let|\midvert #1}\,\rbrace}}
+  \let|\midvert #1}\,\rbrace}}
 }
 \def\midvert{\egroup\mid\bgroup}
 
 % change the default labels for enumerate
 \renewcommand{\labelenumi}{\alph{enumi})}
 \renewcommand{\labelenumii}{(\roman{enumii})}
+
+% for code
+\usepackage[T1]{fontenc}
+\usepackage{inconsolata}
+
+\usepackage{color}
+\definecolor{bluekeywords}{rgb}{0.13,0.13,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.9,0,0}
+
+\usepackage{listings} 
+\lstset{language=[Sharp]C,
+  showspaces=false,
+  showtabs=false,
+  breaklines=true,
+  numbers=left,
+  numberstyle=\ttfamily,
+  frame=single,
+  showstringspaces=false,
+  breakatwhitespace=true,
+  escapeinside={(*@}{@*)},
+  commentstyle=\color{greencomments},
+  keywordstyle=\color{bluekeywords},
+  stringstyle=\color{redstrings},
+  basicstyle=\ttfamily
+}
 
 \endinput
