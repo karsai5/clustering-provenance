@@ -1,0 +1,46 @@
+\chapter{Initial interface}
+% Initial interface ideas, with a couple of screenshots, and a paragraph about implementation
+
+Our interface reads provenance data stored in the PROV format~\cite{primer2013} and renders a directed acyclic graph that users can explore by zooming, panning, rearranging nodes and grouping nodes manually. 
+
+%% IN UI work, accessible has special meaning
+We implemented this as a web application. We use the Cytoscape.js\footnote{Cytoscape.js: Graph theory library for analysis and visualisation \url{http://js.cytoscape.org/}} because it has good support for graph theory. 
+Files are loaded completely client-side, to reduce bandwidth. If faster analysis were required, it may require use of a combination of server-side and client-side processing.
+
+%We implemented this interface as a web application because we had the highest level of expertise in web debelopment and it is a platform that is easily accessible by users. The standard technology for data visualisation in a browser is the D3.js\footnote{D3: Data Driven Documents \url{https://d3js.org/}} JavaScript library, however this interface is implemented using the Cytoscape.js\footnote{Cytoscape.js: Graph theory library for analysis and visualisation \url{http://js.cytoscape.org/}} because it specifically focuses on graph theory. Files are loaded completely client side in order to reduce bandwidth. If high powered analysis of provenance was required it may later be necessary to have server side processing in conjunction to client side processing. 
+
+\section{Features}
+
+This section explains how the design of our interface fulfils the seven visualisation tasks outlined by Ben Shneiderman~\cite{Shneiderman1996}: \textit{overview}, \textit{zoom}, \textit{filter}, \textit{details-on-demand}, \textit{relate}, \textit{history}, \textit{extract}. 
+
+\subsection{Movement and Rearranging}
+On first opening a provenance graph, the viewport is positioned to fit the entire graph on screen. This gives users an overview of the provenance. Users can then move the viewport around by clicking and dragging. Zooming is accomplished by using the scroll wheel. 
+
+By default the graph's overall layout is determined using the JavaScript library dagre\footnote{Dagre: supports lay out of directed graphs client-side. The main skeleton of algorithm comes from ``A Technique for Drawing Directed Graphs''~\cite{Gansner1993}}, with other layout options, such as circle and breadth-first, available using the ``Reset Layout'' menu (visible on the top bar, second from the left in the figures). Users can also re-arrange nodes as they wish by clicking and dragging on a node. 
+
+\subsection{Details-on-demand}
+Selecting a node shows the details panel, as in Fig.~\ref{fig:fitness-grouped}. This displays other information about the node and contextual functions such as renaming nodes (the blue link at the bottom of the panel) or grouping nodes.
+
+\subsection{Grouping}
+
+Users can select multiple nodes at once, by clicking on each whilst holding down \textit{ctrl}. 
+Once multiple nodes have been selected, the information panel will contain a link to group the nodes. 
+Selecting this moves the nodes together, replacing them with a single composite node, represented by a light blue oval, 
+with default name based on the name of the node closest to the root plus the word ``group''. 
+
+\subsection{History}
+
+%A vital task in exploration interfaces is that of history~\cite{Shneiderman1996}. 
+Having the ability to undo and redo 
+actions is critical to ensure that users can confidently and safely explore the information, 
+without fear of causing permanent damage~\cite{Shneiderman1996}. 
+Our interface tracks the movement and grouping of nodes. 
+Then undo and redo buttons allow users to step through through these actions. 
+A history pane can be toggled, by clicking the top right history icon (this pane is visible on the right of Fig.~\ref{fig:loop}), to show what current step of history a user is at.
+
+\subsection{Sharing}
+
+The ``Export'' menu item (in the top bar of the figures)
+saves an image of the current graph with all the user modifications. 
+This can either save the entire graph or be limited to the current viewport,
+if the user wanted to focus on a certain section.

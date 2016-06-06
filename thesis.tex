@@ -62,36 +62,28 @@
 % reset the page numbering and change to arabic numbers
 \newpage\setcounter{page}{1}\pagenumbering{arabic}
 
-\include{header}
+\include{abstract} % abstract of thesis
 
-\include{summary}
+\include{introduction} % intro to pro etc.
 
-\include{body}
+\include{challenges} % challenges of clustering
 
-\include{usability-plan}
+\include{interface} % explanation of interface
 
-\include{technical-decisions}
+\include{usability-plan} % plan of question coding etc.
 
-\chapter{Discussion and Conclusions}
+\chapter{Results} % results
 
-\chapter{Acknowledgments}
+\chapter{Conclusions and Discussion} % discussion
 
-\include{litreview}
+\include{future} % planned future work
 
-\bibliography{bibliography,bibliography_PM}
-\bibliographystyle{plain}
+\include{technical-decisions} % technical implementation decisions
 
-\begin{appendices}
-	\renewcommand{\thesection}{\appendixname~\Alph{section}}
+\include{litreview} % literature review
 
-	\section{Provenance Primer}
-	\label{pdf:prov-primer}
-	\includepdf[pages=-,frame=true,width=\linewidth]{pdfs/provenance-primer.pdf}
+\include{bibliography}
 
-	\includepdf[pages=-,frame=true,width=\linewidth,pagecommand=\section{Interview Questionnaire}]{pdfs/questionnaire.pdf}
-
-\end{appendices}
-
-
+\include{appendix}
 
 \end{document}
