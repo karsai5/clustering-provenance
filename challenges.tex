@@ -21,24 +21,6 @@ greater detail in Chapter~\ref{cha:initial_interface}). This process is however 
 
 The challenge is how to create a method for allowing users to cluster a large number of nodes without losing the fine grained control of the above process. We decided to implement a naive search function that runs a regex query on all the properties of a node and hilights any nodes with matching properties.
 
-In Figure~\ref{fig:search1} you can see an example of this. Open inside the ProvOwl interface is \textit{IR-baseline.prov}, an abstract example that shows the provenance of a report that is created to show analytical information about twitter data from two different users. On the right hand side of the screen is the search panel with the regex text \texttt{X-tweets|query-X-Time}. This query is run on all the nodes and because the pipe (\texttt{|}) characted represents an OR operator in regex hilights all the nodes that are either names \texttt{X-tweets-*} or \texttt{query-X-Time-*}. Once thses nodes are hilighted (as indicated by the red outline) they can be clustered into a composite node as seen in Figure~\ref{fig:search2}.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=\linewidth]{search1}
-	\caption{A screenshot or ProvOwl with the \textit{IR-baseline.prov} file open; an abstract example that shows the provenance of an advice report presenting analytical information about twitter feeds. The search panel has been used to select a subset of the nodes.}
-	\label{fig:search1}
-\end{figure}
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=\linewidth]{search2}
-	\caption{Using the \textit{Group Nodes} button in the search panel, the nodes highlighted in Figure~\ref{fig:search1} have been clustered into a single composite node labelled \texttt{X-tweets-1 group}.}
-	\label{fig:search2}
-\end{figure}
-
-\clearpage
-
 Future challenges involve allowing users to search for all nodes that match one regex but not another. It would also be useful to only match searches on particular properties of a node, for example a user may only want to match their search on \textit{author} of a node (assuming that property exists\footnote{Breifly discussed in the introduction, the PROV standard allows an arbitraty number of key value properties to be attributed to a node.}). Many users during usability studying requested the ability to cluster all the children of a node, extending from this it would also be useful to allows uers to cluster based on a nodes relationships with other nodes, for example ``Cluster all nodes that match the following regex \texttt{X-tweets|query-X-Time} and are not derived from \texttt{TwitterFeed-time-3}.
 
 Possiblty the biggest challenge in this section would be that of paramaterised clustering. Where a single action by the user would create mutliple clusters. A common clustering we found while studying participants was selecting the entity and the actitvity and creating a composite node of them. In Figure~\ref{fig:search1} they would cluster \texttt{[X-tweets-1, query-X-time-1]}, \texttt{[X-tweets-2, query-X-time-2]} and \texttt{[X-tweets-3, query-X-time-3]} into seperate composite nodes. This would be an ideal use of a paramaterised language that would allow the user to ``group all X-tweets with their corosponding query-X-Time'', however creating a language that is both powerfl and easy to learn and use will be quite a challenge.

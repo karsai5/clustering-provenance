@@ -1,47 +1,94 @@
-\chapter{Initial interface}
-\label{cha:initial_interface}
-% Initial interface ideas, with a couple of screenshots, and a paragraph about implementation
+\chapter{Prototype design}
 
-Our interface reads provenance data stored in the PROV format~\cite{primer2013} and renders a directed acyclic graph that users can explore by zooming, panning, rearranging nodes and grouping nodes manually. 
+In order to effectively assess the effectiveness of a clustering model we created a prototype interface that could be used to demo the different features when usability testing. We created a web application called ProvOwl that reads provenance from the PROV format and renders a directed acyclic graph that users can explore by panning, zooming and rearranging nodes.
 
-%% IN UI work, accessible has special meaning
-We implemented this as a web application. We use the Cytoscape.js\footnote{Cytoscape.js: Graph theory library for analysis and visualisation \url{http://js.cytoscape.org/}} because it has good support for graph theory. 
-Files are loaded completely client-side, to reduce bandwidth. If faster analysis were required, it may require use of a combination of server-side and client-side processing.
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{interface-example}
+\caption{A screenshot of ProvOwl rendering the \texttt{fitbit\_score} prov file used in the usability studies.}
+\label{fig:interface-example}
+\end{figure}
 
-%We implemented this interface as a web application because we had the highest level of expertise in web debelopment and it is a platform that is easily accessible by users. The standard technology for data visualisation in a browser is the D3.js\footnote{D3: Data Driven Documents \url{https://d3js.org/}} JavaScript library, however this interface is implemented using the Cytoscape.js\footnote{Cytoscape.js: Graph theory library for analysis and visualisation \url{http://js.cytoscape.org/}} because it specifically focuses on graph theory. Files are loaded completely client side in order to reduce bandwidth. If high powered analysis of provenance was required it may later be necessary to have server side processing in conjunction to client side processing. 
+When designing and selecting the features I would implement I used Ben Shneiderman's paper \textit{The eyes have it}~\cite{Shneiderman1996} as a foundation. In this paper he outlines seven visualisation tasks that are a useful starting point for designing advance graphical user interfaces. The tasks (taken directly from Shneiderman's paper) are as follows:
 
-\section{Features}
+\begin{itemize}
+\item Overview: Gain an overview of the entire collection. 
+\item Zoom : Zoom in on items of interest 
+\item Filter: Filter out uninteresting items. 
+\item Details-on-demand: Select an item or group and get details when needed.
+\item Relate: View relations hips among items. 
+\item History: Keep a history of actions to support undo, replay, and progressive refinement.
+\item Extract: Allow extraction of sub-collections and of the query parameters. 
+\end{itemize}
 
-This section explains how the design of our interface fulfils the seven visualisation tasks outlined by Ben Shneiderman~\cite{Shneiderman1996}: \textit{overview}, \textit{zoom}, \textit{filter}, \textit{details-on-demand}, \textit{relate}, \textit{history}, \textit{extract}. 
+Whilst implementing ProvOwl I continually came back to this list of tasks as a grounding point. Below I describe the main features of the interface. 
 
-\subsection{Movement and Rearranging}
-On first opening a provenance graph, the viewport is positioned to fit the entire graph on screen. This gives users an overview of the provenance. Users can then move the viewport around by clicking and dragging. Zooming is accomplished by using the scroll wheel. 
+\section{Movement and Rearranging}
+\label{sec:movement_and_rearranging}
 
-By default the graph's overall layout is determined using the JavaScript library dagre\footnote{Dagre: supports lay out of directed graphs client-side. The main skeleton of algorithm comes from ``A Technique for Drawing Directed Graphs''~\cite{Gansner1993}}, with other layout options, such as circle and breadth-first, available using the ``Reset Layout'' menu (visible on the top bar, second from the left in the figures). Users can also re-arrange nodes as they wish by clicking and dragging on a node. 
+On first opening a provenance graph, the viewport is positioned to fit an entire graph on screen as seen in Figure~\ref{fig:interface-example}. This acomplishes the \textit{overview} task from above and allows the user to view all the provenance at once. Users can then pan around by clicking and dragging. Zooming is accomplished by pressing ctrl+[+,-] or by using the scroll wheel. In large graphs this allows users to zoom in on areas of interest. 
 
-\subsection{Details-on-demand}
-Selecting a node shows the details panel, as in Fig.~\ref{fig:fitness-grouped}. This displays other information about the node and contextual functions such as renaming nodes (the blue link at the bottom of the panel) or grouping nodes.
+By default the graph's overall layout is detemined using a JavaScript library called dagre that generates layouts for directed acyclic graphs client side. The main skeleton of the algorithm implemented to acomplish this comes from the paper ``A technique for Drawing Directed Graphs''~\cite{Gansner1993}. In early prototypes other layout options where made available such as circle and breadth-first, but this confused users and where later removed in favor of using dagre exclusively for layout.
 
-\subsection{Grouping}
+\begin{wrapfigure}{r}{0.3\textwidth}
+	\centering
+	\includegraphics[width=\linewidth]{interface-details-close}
+	\caption{A close up of the details panel from Figure~\ref{fig:interface-details}}
+	\label{fig:key-concepts}
+\end{wrapfigure}
 
-Users can select multiple nodes at once, by clicking on each whilst holding down \textit{ctrl}. 
-Once multiple nodes have been selected, the information panel will contain a link to group the nodes. 
-Selecting this moves the nodes together, replacing them with a single composite node, represented by a light blue oval, 
-with default name based on the name of the node closest to the root plus the word ``group''. 
+Although initial placement is determined using the dagre algorithm, users can also re-arrange nodes manually by clicking and dragging a node. Note that this causes some issues when users are trying to pan, instead of cliking and dragging the background they accidentally click and move a node instead.
 
-\subsection{History}
+\section{Details on demand}
+\label{sec:details_on_demand}
 
-%A vital task in exploration interfaces is that of history~\cite{Shneiderman1996}. 
-Having the ability to undo and redo 
-actions is critical to ensure that users can confidently and safely explore the information, 
-without fear of causing permanent damage~\cite{Shneiderman1996}. 
-Our interface tracks the movement and grouping of nodes. 
-Then undo and redo buttons allow users to step through through these actions. 
-A history pane can be toggled, by clicking the top right history icon (this pane is visible on the right of Fig.~\ref{fig:loop}), to show what current step of history a user is at.
+When a user selects a single or group of nodes the details panel is shown, as in Figure~\ref{fig:interface-details}. This displays information about the node as well as all its properties. At the bottom of the panel in blue text are contexual hyperlinks that enable functions such as renaming and in the case of multiple selected nodes, grouping. As suggested by the title, this directly immplements the taks of details-on-demand.
 
-\subsection{Sharing}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{interface-details}
+	\caption{A screenshot of ProvOwl with the \texttt{IR-baseline} prov file open. A indicated by the red outline, the node \texttt{TwitterFeed-time-1} has been selected and details about it such as name and classification status are shown in the details panel in the top left.}
+	\label{fig:interface-details}
+\end{figure}
 
-The ``Export'' menu item (in the top bar of the figures)
-saves an image of the current graph with all the user modifications. 
-This can either save the entire graph or be limited to the current viewport,
-if the user wanted to focus on a certain section.
+\section{Clustering}
+\label{sec:clustering}
+
+As mentioned in Section~\ref{sec:user_defined_clusters} I have implemented two ways of clustering nodes, manually and via a search function. In both cases once the user activates the group function, the currently selected nodes are animated to their new position (the node closest to root) and replaced by a composite node, represented by a light blue oval. 
+
+To manually cluster nodes a user first selects multiple nodes at once, by clicking on each whilst holding down \textit{ctrl}. Once multiple nodes have been selected the user cn group them together either with \textit{ctrl+g} or by selecting the group nodes hyperlink from the details panel.
+
+The above method is tedious for more than a handful of nodes so I also implemented the search function. By opening up the search panel the user has access to a search field. The search function takes the value inputted by the user and runs a regex match on each property of each node. If any property of a node matches the regex it is selected (as indicated by a red outline).
+
+In Figure~\ref{fig:search1} you can see an example of this. Open inside the ProvOwl interface is \textit{IR-baseline.prov}, an abstract example that shows the provenance of a report that is created to show analytical information about twitter data from two different users. On the right hand side of the screen is the search panel with the regex text \texttt{X-tweets|query-X-Time}. This query is run on all the nodes and because the pipe (\texttt{|}) characted represents an OR operator in regex hilights all the nodes that are either names \texttt{X-tweets-*} or \texttt{query-X-Time-*}. Once thses nodes are hilighted (as indicated by the red outline) they can be clustered into a composite node as seen in Figure~\ref{fig:search2}.
+
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{search1}
+	\caption{A screenshot or ProvOwl with the \textit{IR-baseline.prov} file open; an abstract example that shows the provenance of an advice report presenting analytical information about twitter feeds. The search panel has been used to select a subset of the nodes.}
+	\label{fig:search1}
+\end{figure}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{search2}
+	\caption{Using the \textit{Group Nodes} button in the search panel, the nodes highlighted in Figure~\ref{fig:search1} have been clustered into a single composite node labelled \texttt{X-tweets-1 group}.}
+	\label{fig:search2}
+\end{figure}
+
+\clearpage
+
+\section{History}
+\label{sec:history}
+
+Having the ability to undo and redo actions is one of the above mentioned tasks for designing advance graphical interfaces and I believe one of the most important. It allows users to confidently and safely explore information without fear of causing permanent damage. My interface tracks primarily the movement and clustering of nodes. The undo and redo buttons allow users to step backwards and forwards through these actions. Using the history icon in the top right corner of the interface toggles a history pane (as seen in Figure~\ref{fig:interface-history}) that shows the user what step they are currently at. 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\linewidth]{interface-history}
+	\caption{In the top right of the interface can be seen the history panel. This indicates what step of history the user is currently at. The user can use the undo and redo commands in the top bar to move backwards and forwards.}
+	\label{fig:interface-history}
+\end{figure}
+
+\section{Sharing}
+\label{sec:sharing}
