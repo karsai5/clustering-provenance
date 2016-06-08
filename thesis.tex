@@ -7,6 +7,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{caption} 
+\usepackage{color} 
 \usepackage{chngpage}
 \usepackage{float}
 \usepackage{framed}
@@ -52,9 +53,17 @@
 
 % listings style for prov code
 \lstdefinestyle{provn}{
-  breaklines=true,
-  showstringspaces=false,
-  basicstyle=\footnotesize\ttfamily,
+	breaklines=true,
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily,
+}
+\lstdefinestyle{basic}{
+	breaklines=true,
+	showstringspaces=false,
+	basicstyle=\footnotesize\ttfamily,
+	keywordstyle=\color{black},
+	commentstyle=\color{black},
+	stringstyle=\color{black},
 }
 
 

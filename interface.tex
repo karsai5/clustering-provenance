@@ -98,6 +98,12 @@ In the top bar of Figure~\ref{fig:interface-history} there is a menu-bar option 
 \section{Click tracker}
 \label{sec:click_tracker}
 
-To facilitate with usability testing and by recommendation of Judy Kay I implemented a click tracker into the application. This simply logs clicks that the user makes, capturing time, location and element that the user clicked on. This could then be downloaded via the export command as a CSV file.  You can see an example of it's output below.
+To facilitate with usability testing and by recommendation of Judy Kay I implemented a click tracker into the application. This simply logs clicks that the user makes, capturing time, location and element that the user clicked on. This could then be downloaded via the export command as a CSV file.  You can see below an example of the file generated from exploring the IR-baseline prov file.
 
-\lstinputlisting[style=provn]{misc/clickfile.csv}
+
+\begin{figure}[h]
+	\centering
+	\lstinputlisting[style=basic]{misc/clickfile.csv}
+	\caption{The CSV file generated from a user exploring the IR-baseline provenance file. Each line represent a single click by the user, a small description of the action they completed, what element it effected and the X,Y position of the click (if appropriate).}
+	\label{fig:clickfile}
+\end{figure}
