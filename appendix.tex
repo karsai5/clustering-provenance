@@ -1,11 +1,21 @@
+\newcommand{\multipdf}[3][]{
+	\includepdf[pages=1,frame=true,width=\linewidth,pagecommand=\section{#2}]{#3}
+	\includepdf[pages=2-#1,frame=true,width=\linewidth]{#3}
+}
+
+\newcommand{\singlepdf}[2]{
+	\includepdf[pages=1,frame=true,width=\linewidth,pagecommand=\section{#1}]{#2}
+}
+
+
+
 \begin{appendices}
 	\renewcommand{\thesection}{\appendixname~\Alph{section}}
 
-	\section{Provenance Primer}
-	\label{pdf:prov-primer}
-	\includepdf[pages=-,frame=true,width=\linewidth]{pdfs/provenance-primer.pdf}
+	\singlepdf{Provenance Primer}{pdfs/provenance-primer.pdf}
 
-	\includepdf[pages=-,frame=true,width=\linewidth,pagecommand=\section{Interview Questionnaire}]{pdfs/questionnaire.pdf}
+	\multipdf{Interview Questionnaire}{pdfs/questionnaire.pdf}
+
 
 \end{appendices}
 
