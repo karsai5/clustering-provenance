@@ -1,0 +1,31 @@
+Timestamp	Desc	Element	X Position	Y Position
+1465352349411	Moved node	ir:X-tweets-3	870	476
+1465352349471	Clicked node	ir:X-tweets-3	870	476
+1465352349927	Moved node	ir:X-tweets-2	645	464
+1465352349999	Clicked node	ir:X-tweets-2	640	464
+1465352350310	Moved node	ir:X-tweets-1	395	460
+1465352350349	Clicked node	ir:X-tweets-1	395	460
+1465352351271	Grouped Nodes	ir:X-tweets-1,ir:X-tweets-2,ir:X-tweets-3		
+1465352360132	Grouped with simple filter	Y		
+1465352361542	Moved node	-286775817	1510	289
+1465352362383	Clicked background		1608	576
+1465352363671	Moved node	-1353429745	298	372
+1465352363725	Clicked node	-1353429745	298	372
+1465352363792	Moved node	-1353429745	298	372
+1465352363902	Clicked node	-1353429745	298	372
+1465352363915	Clicked node: double click	-1353429745	298	372
+1465352365551	Clicked background		235	253
+1465352365918	Moved node	ir:X-tweets-1	274	359
+1465352365981	Clicked node	ir:X-tweets-1	274	359
+1465352366342	Clicked background		430	353
+1465352366805	Moved node	ir:X-tweets-2	574	376
+1465352366878	Clicked node	ir:X-tweets-2	573	376
+1465352367302	Moved node	ir:X-tweets-1	318	378
+1465352367374	Clicked node	ir:X-tweets-1	318	378
+1465352367878	Moved node	ir:X-tweets-3	766	366
+1465352367933	Clicked node	ir:X-tweets-3	766	366
+1465352368799	Grouped Nodes	ir:X-tweets-1,ir:X-tweets-2,ir:X-tweets-3		
+1465352369935	Clicked background		447	297
+1465352373590	Moved node	ir:X-summary	620	515
+1465352376198	Moved node	ir:X-profile	841	664
+1465352377742	Clicked background		674	619

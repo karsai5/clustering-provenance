@@ -94,3 +94,10 @@ Having the ability to undo and redo actions is one of the above mentioned tasks 
 \label{sec:sharing}
 
 In the top bar of Figure~\ref{fig:interface-history} there is a menu-bar option to export the current graph. This dropdown menu allows the user to either save the entire graph, or just the current viewport, as an image. The option to export just the viewport allows a user to focus on a certain section. This is related to the share task above and allows easy sharing of provenance files with other people for feedback and analysis. In the future I would also like to be able to export the current graph in PROV format with notation for clustered nodes.
+
+\section{Click tracker}
+\label{sec:click_tracker}
+
+To facilitate with usability testing and by recommendation of Judy Kay I implemented a click tracker into the application. This simply logs clicks that the user makes, capturing time, location and element that the user clicked on. This could then be downloaded via the export command as a CSV file.  You can see an example of it's output below.
+
+\lstinputlisting[style=provn]{misc/clickfile.csv}
