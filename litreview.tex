@@ -1,18 +1,18 @@
-\chapter{Related work}
+\section{Related work}
 
-\section{Provenance Overview}
+\subsection{Provenance Overview}
 \label{sec:provenance_overview}
 
 As mentioned above, provenance is historically used in the field of antiques as a guide to authenticity of quality. In this thesis we focus on the more modern concept of digital provenance, a metadata that stores the lienage of a file. Only recently defined, below are two papers outlining the requirements and definition of digital provenance.
 
-\littitle{Carata2014}
+\relatedwork{Carata2014}
 \label{sub:a_primer_on_provenance}
 
 Published in the \textit{Communications of the ACM} magazine, this article gives an in depth introduction to digital provenance. It presents current research in the field from a practical perspective and talks at length about their possible use cases as well as issues obtaining, using and securing provenance.
 
 This paper does an impressive job of laying out the fundamentals of digital provenance, as well as identifying current research efforts and areas of improvement. It also describes the language and terminology used by the provenance community when discussing different features of provenance, such as the concepts of \textit{granularity} and \textit{layering} when collecting provenance.
 
-\littitle{Groth2012}
+\relatedwork{Groth2012}
 \label{sub:requirements_for_provenance_on_the_web}
 
 This paper from \textit{The International Journal of Digital Curation} synthesizes three main categories that can be used to assess the adequacy of different online provenance systems. It splits these categories into multiple dimensions for finer grained analysis.
@@ -21,29 +21,29 @@ The three main categories this paper uses as a base for assessing provenance sys
 
 This paper outlines a range of dimensions that can by used in order to assess an interface. In terms of HCI these can be used as the base for tasks to test on users as well as suggesting features that may be useful in my application. For example, one of the dimensions for \textit{Use} is \textit{Imperfections}, suggesting that I need to take into account that erroneous/imperfect provenance data may exists when creating my interface.
 
-\section{Provenance Acquisition}
+\subsection{Provenance Acquisition}
 \label{sec:provenance_acquisition}
 
 Provenance can be acquired in a variety of ways. A common goal in the literature is to collect provenance automatically and transparently in order to reduce cognitive load on users as well as reducing erroneous or false data. The papers below discuss the collection of provenance across two different layers: operating system level and application level, both with their advantages and disadvantages.
 
-\subsection{OS level provenance acquisition}
+\subsubsection{OS level provenance acquisition}
 \label{sub:os_level_provenance_acquisition}
 
 OS level provenance acquisition stores the calls between different processes and files. It has the advantage of clearly showing what applications rely on which resources and can be used via a custom kernel to log provenance on a computer without requiring any changes to the users applications.
 However because of its intrinsic need to treat processes as ``black boxes'' it can also trigger false positives when graphing lineage. For example a process may invoke the use of multiple libraries however it is arguable as to whether they're all relevant in terms of provenance.
 
-\littitlesub{Muniswamy2006}
+\relatedwork{Muniswamy2006}
 
 Published in 2006, the PASS paper is often cited in related literature as a prime example of OS level provenance collection. This paper discusses the advantages of having provenance information maintained by the storage system as well as presenting a PASS implementation with analysis of its performance costs.
 
 In most implementations provenance is stored in a standalone database systems or flat files. This paper argues that provenance should be maintained by the storage system since it is the storage system that manages existing metadata for files. This allows tighter coupling between data and provenance as well as allowing the transparent collection and management of provenance information. The paper lists a set of requirements for a PASS system as well as their own implementation. They benchmarked their implementation on a 500Mhz Pentium 3 computer with 768MB of RAM. The two primary benchmarks used are small and large file microbenchmarks. In the case of the small file benchmark the overhead associated with creating and writing files was as much as 200\%, however its noted that the absolute numbers are still quite small and that this benchmark in particular is quite challenging to PASS. Results from the large file benchmark where better with a time overhead of no more than \%10-\%20.  It seems more reasonable that real users will only encounter overheads of the latter in daily use. Overall the PASS system provides extra functionality not currently available in other systems with only a moderate overhead. It is also important to note that the systems used for these benchmarks are a lot less powerful that what average users use today.
 
-\subsection{Application level provenance acquisition}
+\subsubsection{Application level provenance acquisition}
 \label{sub:application_level_provenance_acquisition}
 
 Application level provenance acquisition has the advantage of creating more relevant relationships between different entities. However it suffers from the overhead required to implement effective capturing and in a lot of cases onus on the user to annotate their actions. Most of the papers below discuss a system that requires developers to somehow modify (usually marginally) their application in order to correctly collect provenance.
 
-\littitlesub{Guo2012}
+\relatedwork{Guo2012}
 
 Authored by Margo Seltzer (one of the top contributors of the field\cite{Macko2012,Seltzer2011,Borkin2013,Muniswamy-Reddy2010,Braun2008},) and Philip J. Guo, this paper presents one of the many ways to collect provenance on a computer. It focuses primarily on research relate provenance and its application in respect to \textit{lab notebooks}.
 
@@ -51,7 +51,7 @@ The application presented in this paper, Burrito, consists of two parts: an exte
 
 This paper is interesting as it brings provenance to the forefront of the users mind. The goal been that they are constantly annotating and referencing past provenance activities during the length of a project. It also has the added advantage of having images and other program output inline the visualisations.
 
-\littitlesub{Macko2012}
+\relatedwork{Macko2012}
 
 Written in 2012 the authors of this paper Macko and Seltzer are both heavy contributors of the provenance field. Whilst most of the other provenance frameworks mentioned in this review are limited to a particular workflow or language, Macko and Seltzer argue that the real world is a lot more heterogeneous and to accommodate for this they argue the need for a general-purpose provenance library.
 
@@ -59,7 +59,7 @@ This paper presents the Core Provenance Library (CPL) a C++ application that all
 
 This library provides hope for a standardised way of capturing provenance information. However as mentioned above it is up to developers to correctly integrate it and there's an intrinsic trust that correct and truthful provenance will be recorded. Disappointingly the \href{https://code.google.com/p/core-provenance-library/}{google code repository} hasn't been updated since 2012 and no replacement github repository has been created in light of the shutdown of Google code, suggesting that the project is no longer maintained.
 
-\littitlesub{Allen2010}
+\relatedwork{Allen2010}
 
 This paper describes the ability to compose multiple provenance-unaware services in an ``open world'' system and collect provenance information about their execution. It presents a provenance collection application that sits upon the enterprise service bus (ESB) in order to log provenance information from communicating applications.
 
@@ -74,12 +74,12 @@ In order to evaluate their ESB MULE Capturing Agent (MCA) they tested it upon tw
 
 This paper is highly cited in the provenance community. It shows one of the many \textit{layers} of provenance that can be recorded and is one of the few systems that records provenance across multiple machines. 
 
-\section{Provenance Storage}
+\subsection{Provenance Storage}
 \label{sec:provenance_storage}
 
 Once provenance has been captured by one of the methods mentioned above, it has to be stored somehow. In a lot of early papers the provenance was stored in different proprietary flat file formats. Since then a standard has been created by the W3C, as well as research into how provenance can be stored on the cloud.
 
-\littitlesub{primer2013}
+\relatedwork{primer2013}
 
 This online document is an initiative by W3C to create a standard as by which to discuss and store digital provenance. This paper is part of a series of documents outlining different aspects of the PROV standard, in particular it is a primer on the fundamental PROV concepts.
 
@@ -99,7 +99,7 @@ This document outlines the three mains concepts illustrated in Figure~\ref{fig:k
 
 I used the standards defined in this paper as the oracle definition for provenance in my designs. My prototype was built so that it can read provenance files in the PROV-N format.
 
-\littitle{Muniswamy-Reddy2010}
+\relatedwork{Muniswamy-Reddy2010}
 
 This paper presents the following problem: although cloud data and provenance both exist, they are not usually used in conjunction because it is difficult to store both in the same location. Traditionally if data is stored in a database, the related provenance information is then stored somewhere else. To mitigate this they present 3 different methods for maintaining data and provenance in current cloud stores.
 
@@ -107,12 +107,12 @@ This paper's contribution is three protocols (using off the shelf software,) eac
 
 This creates an avanue of further research. Currently my prototype interface only reads locally stored flat provenance files. In the future it would be useful to expand this to provenance stored on the cloud as well.
 
-\section{Provenance Security}
+\subsection{Provenance Security}
 \label{sec:provenance_security}
 
 Once provenance is captured and stored the issue of securing it is paramount. Simple per-attribute access permissions are ineffective for provenance entities because so much information can be gathered from relationships. It is alos worth considernig how to secure the data in such a way that history can't be ``re-written''. The below papers discuss this problem in greater detail.
 
-\littitle{Braun2008}
+\relatedwork{Braun2008}
 
 A discussion paper from 2008, Margo, Uri and Avraham focus on the issue of properly securing the access rights of provenance data. It frames the problem and identifies issues requiring further research.
 
@@ -120,7 +120,7 @@ This paper aims to start discussion and highlight the importance of considering 
 
 This piece is though provoking in the issues it outlines related to securing provenance. It raises the question of how to present partial graphs caused by users with limited permissions. A problem also worth considering in future work is that of how to present to a moderator which bits of a graph are accesible by who.
 
-\littitle{Cheney2011}
+\relatedwork{Cheney2011}
 
 A common theme among papers regarding provenance systems is that they agree that provenance is an open and unsolved issue. This paper from the University of Edinburgh outlines a formal model for provenance, formalization of security fundamentals \textit{disclosure} and \textit{obfuscation} and exploration of its implications in various domains.
 
@@ -128,7 +128,7 @@ This paper identifies five main classes of provenance policies: availability, co
 
 Unfortunately this paper provides limited benefit to my project because its focus on security is abstract enough to be most useful to researchers designing provenance security systems. However it provides understanding of the security issues involved as well as ideas of how security will be implemented. 
 
-\littitle{Hasan2009}
+\relatedwork{Hasan2009}
 
 This paper is often referenced because of it work in creating \textit{Sprov}, a secure provenance storage method. 
 
@@ -136,17 +136,17 @@ The author's main contribution from this paper is \textit{Sprov}, a prototype of
 
 This paper shows one of the many ways provenance data can be used and recorded. Its relevancy to my project is in understanding how provenance will be stored and protected as well as issues that arise in a user interface only showing partial data.
 
-\section{Provenance Display}
+\subsection{Provenance Display}
 \label{sec:provenance_display}
 
 Lastly we come to the field of thesis. How to display provenance. As mentioned previously, provenance never reduces in size, it is forever expanding and been added to. Issues quickly arrise when trying to present such vast amounts of information. The primary issue been that users can't process such large graphs effectively.
 
-\subsection{Visualisation fundamentals}
+\subsubsection{Visualisation fundamentals}
 \label{sub:visualisation_fundamentals}
 
 There's a series of fundamentals that have been tried and tested in the field of visualisation as important rules to follow when developing visualisation tools. Ben Shneiderman discusses fundamental tasks that should be accomplished by visualisation exploration software in order to be effective. A HCI paper then presents how non-technical users view provenance information.
 
-\littitlesub{Shneiderman1996}
+\relatedwork{Shneiderman1996}
 
 Published in 1996 this paper is seen as one of the core papers cited when discussing complex visualisation software. It recommends seven properties that should be implemented by an advanced graphical user interface: overview, zoom, filter, details-on-demand, relate, history and extract. It distils these tasks into what's known as the Visualisation Information Seeking Mantra:
 
@@ -159,7 +159,7 @@ Each of these tasks is explained in great detail with arguments as to why they a
 
 I used this paper as a primary starting point when creating my prototype. It was effective as a means of outlining the scope of my application, defining what features where and where not importand.
 
-\littitlesub{Bachour2015}
+\relatedwork{Bachour2015}
 
 A Human Centred Technology research project, this paper focuses on collecting feedback from non-expert uses on their understanding of provenance. Through the medium of an online game they explore how well users understand the W3 prov standard\cite{primer2013} and its related artifacts as well as their general opinions and beliefs on provenance data.
 
@@ -167,12 +167,12 @@ The main contributions taken from this paper involved the feedback users gave on
 
 This paper provides some useful feedback from non-technical users as to what issues they perceive when dealing with provenance graphs and allows me to start my interface designs with preliminary user feedback. In conjunction to heuristic feedback the paper also provides some insight into non-expert users opinions on the security/privacy issues of provenance as well as their understanding of its real world applications.
 
-\subsection{General Large Graph Visualisation}
+\subsubsection{General Large Graph Visualisation}
 \label{sub:large_graph_visualisation}
 
 Effective large graph visualisation is an on open issue in many fields outside of provenance. Both of the visualisation techniques presented below use a clustering mechanism for grouping relevant nodes. 
 
-\littitlesub{Abello2006}
+\relatedwork{Abello2006}
 
 This paper presents an interface for exploring large-scale graphs. The visualisation tool is generic in so far as its made for the exploration of graphs in general. It uses a clustered graph to represent information with the ability to arbitrarily expand and collapse clusters to show sub-graphs.
 
@@ -180,7 +180,7 @@ The paper focuses on creating an interface that can present large-scale graphs t
 
 This paper's main relation to my research includes the problems tackled when visualising such large graphs. Design decisions related to clustering and pre-processing provided to be useful in creating my interface as well as issues presented in labelling clusters. 
 
-\littitlesub{Schaffer1996}
+\relatedwork{Schaffer1996}
 
 With this paper been nearly twenty years old its obvious how much younger the provenance research field is in comparison to visualisation. This paper talks about using a novel fish-eye interface in order to show large graphs while allowing users to zoom into particular nodes and not lose context. They also provide usability study results in order to support their claim that fisheye views improve performance compared to traditional variable-zoom interfaces.
 
@@ -188,11 +188,11 @@ This paper sets out to research the problems created by viewing large-scale grap
 
 This paper raises some interesting points about the importance of allowing users to have `peripheral vision' when browsing large complex graphs. There is useful details about how they chose to scale magnified clusters as well as discussion about how to accommodate overlapping clusters. Interestingly they run into similar issues as \cite{Abello2006} when trying to label clusters, except 10 years earlier.  
 
-\subsection{Provenance display tools}
+\subsubsection{Provenance display tools}
 
 There is a diverse range of existing provenance display tools that aim to present provenance to users in an easy to understand way. Whilst most of the applications use a directed acyclic graph to present provenance information, there is also representation through the use of Sankey diagrams and orbital graphs, which depending on what information you wish to portray can sometimes be more effective than DAGs.
 
-\littitlesub{Seltzer2011}
+\relatedwork{Seltzer2011}
 
 As provenance data becomes more common, the amount of provenance information continues to expand. It is not uncommon for the size of provenance data to greatly outweigh its target file, creating provenance data that has upwards of thousands to millions of nodes. This paper presents a Java application that can be used to visualise large scale provenance graphs through the use of zooming and summation techniques.
 
@@ -207,7 +207,7 @@ This application is often referenced in other provenance visualisation papers as
 	\label{fig:maporbiter}
 \end{figure}
 
-\littitlesub{Biton2007}
+\relatedwork{Biton2007}
 
 This paper is a demonstration that shows how user views can be used to reduce the amount of information returned by provenance queries. It allows users to select which parts of a provenance graph (referred to in this paper as a \textit{work flow}) they find relevant and have the original graph simplified to only include the parts they picked, as seen in Figure~\ref{fig:zoomuserviews}
 
@@ -223,7 +223,7 @@ This interface is similar to what I ended up designing and implementing. The pri
 \end{figure}
 
 
-\littitlesub{Hoekstra2014}
+\relatedwork{Hoekstra2014}
 
 This paper presents an application called PRO-O-Vis that uses Sankey Diagrams in order to reflect the flow of information through activities. It discusses the application, reasoning behind representation through Sankey diagrams and a brief evaluation of their application.
 
@@ -238,7 +238,7 @@ This application differs from other visualisation tools in the field as it's imp
 	\label{fig:provovis}
 \end{figure}
 
-\littitlesub{Callahan2006}
+\relatedwork{Callahan2006}
 
 This is one of the earlier papers mentioning the concept of provenance as we know it today. Published at SIGMOD in 2006, this paper discusses the importance of provenance in generating visualizations. It presents an application called VisTrails that can be used to create visualizations whilst recording provenance during exploration to aid in later scrutiny and replication.
 
@@ -253,7 +253,7 @@ This paper is interesting as it's one of the earliest papers I've found in my re
 	\label{fig:vistrails}
 \end{figure}
 
-\littitlesub{Borkin2013}
+\relatedwork{Borkin2013}
 
 This paper focuses on the visualisation of provenance information relating to filesystem: the read and writes between processes and files. The authors implement a visualization tool called InProv and both qualitatively and quantitatively compare it's effectiveness to one of the standard provenance visualisation tools Orbiter\cite{Seltzer2011}.
 
