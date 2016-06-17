@@ -2,47 +2,68 @@
 
 Provenance as a concept has been around for a long time. It originally comes from the Latin word \textit{provenio}, meaning ``to come forth'' and its primary use has been in the field of art and antiques where provenance is used to identify the authenticity and quality of a piece of artwork. For anyone with a background in databases this term may also be familiar as the concept of linking tuples from the output of a query to the reason they exist.
 
-In this paper the provenance we refer to is that of \textit{digital provenance}. It is a type of metadata representing the lineage of an object. Naively it can be compared to the information stored in revision history systems like that used in google docs\footnote{Google docs: \url{https://docs.google.com}} or version control
+\textit{Digital provenance} is a type of metadata representing the lineage of an object. Naively it can be compared to the information stored in revision history systems like that used in google docs\footnote{Google docs: \url{https://docs.google.com}} or version control
 % TODO: git and mercurial links
-systems such as git\footnote{GIT\: \url{}} or mercurial. These systems are usually limited to storing revisions and authorship. Provenance extends beyond this by making it possible to store and ultimately trace what other entities and activities led to a digital objects current state. By studying the provenance of a file or digital object a user is able to identify what processes, other files and bits of data influenced the file.
+systems such as git or mercurial\footnote{Git \url{https://git-scm.com/} and mercurial \url{https://www.mercurial-scm.org/}}. These systems are usually limited to storing revisions and authorship. Provenance extends beyond this by making it possible to store and ultimately trace what other entities and activities led to a digital objects current state. By studying the provenance of a file or digital object a user is able to identify what processes, other files and bits of data influenced the file.
 
-Provenance has the potential for usefulness in many different fields. The foremost and focus of this paper is the field of personal data management, allowing users to understand how their data is used. Often when a user chooses to share their personal data it is aggregated, anonymised or passed through any number of functions. By exploring provenance users have the ability to understand exactly how much and in what state their personal data is used.
+Provenance has the potential to be useful in any field where the lineage of an object needs to be stored. One example would be in data warehouse systems where information about data transformations and data origins is stored. Another would be banking or accounting systems where reasearch has been done into preventing provenance forgery through the use of block chains~\cite{Hasan2009}.
 
-An example to illustrate this point. Alice has a report that describes her current fitness level as well as outlining possible improvements. Viewing the provenance of
-% TODO: Fitbit and Withings footnotes
-this report shows which sources have been used (e.g. Fit-Bit data to track steps, Withings scale to track weight) and what processes analysed them. In this case it could show that Alice's fitness report was generated using step data from her FitBit data, passed through a summarisation process that summarises 15 minute interval data into daily steps. The provenance of her fitness report can be traced backwards to find this information, it is also possible to trace information forward, possibly in the case of errors in data. Alice remembers that she lent her FitBit to a friend to try for a week, causing errors in her data, in this case she would want to trace the erroneous information forward to see what other processes and entities it effected and would need to be corrected.
+The field that is the focus of this paper is that of personal data management, using provenance to  allow users to understand how their data has been used. Often when a user chooses to share their personal data it is aggregated, anonymised or passed through any number of functions. By exploring provenance users have the ability to understand exactly how much and in what state their personal data is used.
 
-Provenance has the potential to be useful in any field where the lineage of an object needs to be stored. One example would be in data warehouse systems where information about data transformations and data origins is stored. Research into storing provenance in
-% TODO: reference to block chains
-block-chains or similar systems has been undertaken as it would prevent meddling of historical information, something that could be useful in high risk environments such as accounting and banking.
+An example to illustrate this point. We have a person called Alice. She tracks her steps using a Fit-Bit\footnote{Fitbit is a company that sells wearable devices to track you steps and other fitnes data \url{https://www.fitbit.com/}} and weight using a Withings scale\footnote{Withings sells ditigal scales that can log you weigh information wirelessly and automatically \url{http://www.withings.com/us/en/products/smart-body-analyzer}}. She uses the Fit-Bit dashboard to monitor her progress, it displays a series of summaries related to fitness data as seen in Figure~\ref{fig:fitness-dashboard}. However she wonders how some of this data is calculated, from (B) in Figure~\ref{fig:fitness-dashboard} she had deduced that other people can see her fitness score and she is not comfortable with what information her friends might be able to imply from it (for example, would her friends be able to tell when she has missed her fitness goals?).
 
-Early provenance systems stored provenance information in a variety of different flat
-% TODO: prov reference
-file formats. Since 2013, the PROV specification has provided a generic model for storing provenance with a number of serialisations (PROV-N, XML, JSON and RDF). PROV identifies provenance elements as three main concepts:
-
-\begin{itemize}
-	\item Entities: Physical, digital, conceptual objects
-	\item Activities: Elements that cause an entity to come into existence
-	\item Agents: Someone or something that can be assigned responsibility for an activity taking place.
-\end{itemize}
-
-The industry standard for representing these concepts is on an acyclic graph. An example of this with each of the three main concepts can be see in Figure~\ref{fig:key-concepts}.
-
-\begin{wrapfigure}{r}{0.5\textwidth}
+\begin{figure}[h]
 	\centering
-	\includegraphics[width=\linewidth]{key-concepts}
-	\caption{Key Concepts and relationships from the PROV standard displayed in a labelled acyclic graph.}
-	\label{fig:key-concepts}
-\end{wrapfigure}
+  \begin{subfigure}[t]{0.5\textwidth}
+	\label{fig:fitness-dashboard-weight}
+    \centering
+	\includegraphics[width=0.8\linewidth]{dashboard1}
+    \caption{A summary of Alice's weight data.}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.4\textwidth}
+	\label{fig:fitness-dashboard-score}
+    \centering
+	\includegraphics[width=0.8\linewidth]{dashboard2}
+    \caption{A display of Alice's current fitness score and the scores of her friends Bob and Carol.}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.8\textwidth}
+	\label{fig:fitness-dashboard-steps}
+    \centering
+	\includegraphics[width=0.8\linewidth]{dashboard3}
+    \caption{A summary of Alice's step data.}
+  \end{subfigure}
 
-Provenance can be stored in a variety of different granularity's and levels. The three main levels of capture are system-level, application-level and network level. System level provenance is the lowest level and will often capture operating system activities such as which application ran when to effect a piece of data. Application level provenance is usually limited to a single application, and will often capture information directly related to the user using that application. Network provenance often captures information via network attached devices and stores lineage originating from multiple machines. These three levels are quire broad and do not cover all use cases but they do give a good point for starting discussion and comparing provenance capture tools.
+	\caption{Alice's Fitness dashboard shows summaries of information about her. She wonders how some of this information is calculated.}
+	\label{fig:fitness-dashboard}
+\end{figure}
 
-Provenance is also captured at different levels of granularity. Using the example of Alice as above, a system may capture information about her step data at the smallest granularity: how many steps every 15 minutes, or it may store the information at a larger granularity: daily step data.
 
-As seen in Figure~\ref{fig:key-concepts} provenance graphs are most often represented as directed acyclic graphs
-% TODO: Novel provenance representation citing
-(although there has been some other novel approaches). A problem that quickly occurs is that provenance can become incredibly large, particularly in the case of OS level recording as it is usually at a low granularity where a lot of data is recorded in a small amount time. Because provenance is inherently historical it is forever growing in size (as of yet there's no standard for going back and ``compressing'' history,) this means that even provenance captured at a high granularity will monotonously grow and can over time become a graph with thousands or millions of nodes. This becomes a
-% TODO: usability studies chapter cite
-usability problem as users can not visually digest such large graphs. In fact results from our usability studies in section x show that users are put off by graphs with as little as 30 nodes.
+Luckily Fit-Bit stores the provenance of these summaries, so it is possible to find out what data is used to create each of those in Alice's dashboard. However the provenance is stored in PROVN, a text serialisation that's difficult to read, as seen in Figure~\ref{fig:fitness-score-provn}. Alice, a non technical user, is not surprisingly overwhelmed by this and is no closer to understanding how her fitness score was calculated than before she had access to its provenance.
 
-What we describe in this paper is a process of simplifying graphs by clustering nodes into single composite nodes. A part from simplifying the graph and presenting less objects on screen, this also allows users to control what information is seen by other people in order to protect sensitive information or highlight particular concepts.
+The industry standard for visualising provenance graphs is through acyclic directed graphs (although some other visualisation techniques have been experimented with~\cite{Borkin2013}). Representing Alice's fitness score provenance this way makes it easier to understand than the raw PROVN file, as seen in dagram (A) of Figure~\ref{fig:fitness-score-dag}. It is now possible to see that across the bottom of the graph is a series of entities attributed to Alice such as \texttt{step\_tracker\_data} and \texttt{step\_goal}. It can also be seen that these entities are somehow used, through a series of activities, as input for her fitness score. However this graph is still too complex for a non technical user and perhaps even a technical user. The next step is to simplify the graph by clustering some of the nodes together to create something like diagran (B) of Figure~\ref{fig:fitness-score-dag}. In this graph I have taken all the nodes related to weight data and step data and created clusters of them both, reducing the graph from having 15 nodes to only five. This makes it much easier to understand and conveys the same core concepts as before except through fewer nodes. We come here to the crux of the problem that my thesis explores: \textit{Provenance graphs are too complex for regular users to understand.}
+
+What we describe in this paper is the design, implementation and evaluation of an interface that enables users to cluster effectively. 
+\begin{figure}[b]
+	\centering
+	\lstinputlisting[style=provn, firstline=3, lastline=10]{misc/fitness-score.provn}
+	\caption{A extract of the provenance of Alice's fitness score written in the provn standard. It is quite inweildly to read, even for someone similar with provenance data. View the entire file in~\ref{sec:prov_file_fitness_score}}
+	\label{fig:fitness-score-provn}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}[t]{\textwidth}
+    \centering
+	\includegraphics[width=0.8\linewidth]{fitness-score-dag}
+    \caption{The provenance of Alice's fitness score represented as an acyclic directed graph.}
+  \end{subfigure}
+  \begin{subfigure}[t]{\textwidth}
+    \centering
+	\includegraphics[width=0.4\linewidth]{fitness-score-dag-clustered}
+    \caption{The provenance of Alice's fitness score with manually created clusters.}
+  \end{subfigure}
+
+	\caption{Two directed acyclic graphs showing the provenance of Alice's fitness score.}
+	\label{fig:fitness-score-dag}
+\end{figure}
+
