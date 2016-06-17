@@ -1,7 +1,7 @@
 \documentclass[BIT, graphvis, a4paper]{usydthesis}
 
 \usepackage[final]{pdfpages} 
-\usepackage[toc,page]{appendix}
+\usepackage[toc]{appendix}
 \usepackage[utf8]{inputenc}
 \usepackage{amsfonts}
 \usepackage{amsmath}
@@ -12,6 +12,7 @@
 \usepackage{float}
 \usepackage{framed}
 \usepackage{fullpage}
+\usepackage{titletoc}
 \usepackage{graphicx}
 \usepackage{hyperref} 
 \usepackage{listings} 
@@ -89,11 +90,15 @@
 
 \pagenumbering{roman}
 \maketitle
-\tableofcontents
-% reset the page numbering and change to arabic numbers
-\newpage\setcounter{page}{1}\pagenumbering{arabic}
+\chapter*{Contents}
+
+\startcontents[sections]
+\printcontents[sections]{l}{0}{\setcounter{tocdepth}{1}}
 
 \include{abstract} % abstract of thesis
+
+% reset the page numbering and change to arabic numbers
+\newpage\setcounter{page}{1}\pagenumbering{arabic}
 
 \include{introduction} % intro to pro etc.
 
