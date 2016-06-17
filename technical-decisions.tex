@@ -3,53 +3,54 @@
 \subsection{Web Technologies}
 \label{sec:web_technologies}
 
-As we saw above, I implemented my prototype as a web application. The criteria for picking an implementation platform was that of accessibility to users and speed of development. Using that criteria I decided to make my prototype a web application as it's only entry barrier to users is that of a modern web browser. Web applications are a field that I have experience with and can quickly develop in. 
+As we saw above, I implemented my prototype as a web application. The criteria for picking an implementation platform was that of accessibility to users and speed of development. Using that criteria I decided to make my prototype a web application as its only entry barrier to users is that of a modern web browser. I took the Prov-O-Vis~\cite{Hoekstra2014} system as inspiration as it was the most accesible of the availble provenance visualisers and this is partially because it is available online. Web applications are a field that I have experience with and can quickly develop in. 
 
-There are a few pitfalls to this approach that can be addressed through alternative implementations. Because my application is primarily a prototype for illustrating effective exploration features, the issue of scale is not one that was addressed. If a web application was used for enterprise size provenance files the application may soon run out of resources required to render it.
+There are a few pitfalls to this approach that can be addressed through alternative implementations. Because my application is primarily a prototype for illustrating effective exploration features, the issue of scale is not one that is addressed. If a web application was used for enterprise size provenance files the application may run out of resources; further testing and alternative approaches may be required.
 
-An alternative to a web application would be to write the prototye in an OS independent language such as Java or Python; this would allow wide accessibility and more fine grained control of machine resources. However if an OS level language was chosen issues could later occur in presenting provenance on mobile devices as there aren't may languages that run on both desktop and mobile devices without heavy modifications. Consequently if an OS dependant languages such as Apple's swift of Microsoft's C\# was used features and code would have to be replicated for the different OS languages (assuming that OS independent accessibility is an important criteria).
+An alternative to a web application would be to write the prototye in an OS independent language such as Java or Python; this would allow wide accessibility and more fine grained control of machine resources. However if an OS level language was chosen issues could later occur in presenting provenance on mobile devices and a mobile version of the interface may need to be written. Alternatively if an OS dependant language such as Apple's swift of Microsoft's C\# was used features and code would have to be replicated for the different OS languages (assuming that OS independent accessibility is an important criteria).
 
-The standard technology for data visualisation in a browser is the D3.js\footnote{D3: Data Driven Documents \url{https://d3js.org/}} JavaScript library. However as mentioned earlier, I used Cytoscape.js to implement my interface because it's specifically focused on graph theory and has a lot of inbuilt functions such as rendering and events. If this application was to be re-written using D3, a lot more of the fundemental functions of Cytoscape would have to be written from scratch, however it would allow for more fine-grained control of the appplication, this could particularly be useful when dealing with exceptionally large files.
+The standard technology for data visualisation in a browser is the D3.js\footnote{D3: Data Driven Documents \url{https://d3js.org/}} JavaScript library. However as mentioned earlier, I used Cytoscape.js to implement my interface because it is specifically focused on graph theory and has a graph functions built in (such as distance algorithms). 
 
 \subsection{Client Side Processing}
 \label{sec:client_side_processing}
 
-As we saw before, the visualiser loads the file on the client side and renders it locally. When first outlining features of the application I wanted it to be primarily stand alone. This means that even though it can run of a web server, you could just as easily run it locally on your computer with minimal effort because all proccessing and computation is done client side. 
+When a provenance file is selected ProvOwl loads the file and renders it all locally. When first outlining features of the application I wanted it to be primarily stand alone. This means that even though it can run from a web server, you could just as easily run it locally on your computer with minimal effort as all computations are done client side.
 
-However server side computation may be a useful feature for the future, a server with higher computational power and resources may be able to find and analyze interesting details about the file. The naive approach to accomplishing this would to have the file uploaded to the server, analytics run on the provenance and then results downloaded back to the client. An alternative approach however would to have the client select only the neccessary sectinos required for analysis and send those to the server. The client could then render the provenance locally whilst results where computed and finally render the results onto the already drawn graph. This allows the user to begin exploring the graph immediately as well as minimising the amount of bandwidth used by the application.
+However server side computation may be a useful feature for the future, a server with higher computational power and resources may be able to find and analyze interesting details about a file. A simple approach to accomplish this would to have the file uploaded to the server, analytics run on the provenance and then results loaded back to the client. For larger provenance files this could be extended to only load sections required for analysis reducing the bandwidth required. The client could render the provenance locally whilst results where computed and then rendered onto the already drawn graph. This would allow the user to begin exploring the graph with minimal delay while extra information is calculated server side.
 
 \subsection{Node Clustering}
-One of the earliest features we discussed when outlining how to visualise provenance was the ability to cluster and create composite nodes. The feature of allowing multiple nodes to be grouped into a single representative node has two main purposes. Firstly it allows simplification of the graph, this is useful when showing someone a speficit section of the graph as well as easier conceptual understanding when exploring. Secondly it is useful when securing graphs and composite nodes can be used to obviscate information.
 
-Cytoscape.js doesn't have a group feature, so it was required to write one from scratch. The key test for this function is that grouping and ungrouping nodes is undestructive: if a series of nodes are grouped and then ungrouped the resulting graph must be isomorphic to the original.
+Creating a clustering functino in Cytoscape.js required some time and effort because it currently doesn't have a clustering feature, so I was required to write one from scratch. The goal of this function was to have grouping and ungrouping nodes been undestructive: if a series of nodes are grouped and then ungrouped the resulting graph should be isomorphic to the original.
 
 \begin{figure}[h]
   \centering
   \begin{subfigure}[t]{0.5\textwidth}
     \includegraphics[width=\textwidth]{ungrouped}
-    \caption{Graph with no composite nodes}
+    \caption{A provenance graph showing information about a report given on twitter data.}
   \end{subfigure}
   ~
   \begin{subfigure}[t]{0.5\textwidth}
     \includegraphics[width=\textwidth]{grouped}
-    \caption{Same graph with a composite node}
+	\caption{The nodes \texttt{Tweets} and \texttt{X-tweets-[1-3]} have been clustered into the composite node \texttt{uwJIJ}}
   \end{subfigure}
-  \caption{An example of a composite node containing the \textit{Tweets}, \textit{X-tweets-1}, \textit{X-tweets-2} and \textit{X-tweets-3} nodes.}
+  \caption{A provenance that has had a subset of its nodes clustered. In an early version of the prototype composite nodes were given random alphanumeric names as seen on the right.}
 \end{figure}
 
-Nodes removed from Cytoscape.js can be `restored' into their original position, unfortunately any edged associated with the node are permenately destroyed. It is neccessary then to store the edges as a data field in the composite node so that when restoring nodes, edges can also be recreated. 
+Nodes removed from Cytoscape.js can be `restored' into their original position, unfortunately any edged associated with a removed node are permanently destroyed. It is necessary then to store the edges as a data field in the composite node so that when restoring nodes, edges can also be recreated. 
+
+The pseudocode below creates a new cluster. It creates a new node and stores the selected nodes and their edges as properties of it. Then new edges are created from surrounding nodes to the composite node. Finally the selected nodes are ``removed'' so that they are no longer visible.
 
 \begin{figure}[h]
   \centering
   \begin{lstlisting}
- // Create composite node and fields for original edges and nodes.
+ // Create composite node 
  Create new CompositeNode 
- CompositeNode.originalEdges = All edges in neighbourhood of selected nodes
- CompositeNode.originalNodes = All nodes that where grouped
+ CompositeNode.originalEdges = All edges in neighbourhood of selected nodes // save edges
+ CompositeNode.originalNodes = All nodes that where grouped // save nodes
 
- // Create new edges from external nodes to CompositeNode
+ // Create new edges connected to the composite node
  for each edge in neighbourhood {
-  if (edge != internal to group)  {
+  if (edge IS NOT internal to group)  {
     Create new Edge({from: externalNode, to:compositeNode})
   }
  }
@@ -60,15 +61,11 @@ Nodes removed from Cytoscape.js can be `restored' into their original position, 
  \caption{Pseudocode: Creaing a composite node}
 \end{figure}
 
-However the above code only works in a limited scenario: ungrouping nodes in the oposite order of creation. For example if you created comisite nodes $A$, $B$, $C$ (cronologically and all with neighbouring edges) you would have to ungroup them in the following order: $C$, $B$, $A$. If you where to for example ungroup node $A$ first, when ungrouping $C$ it would try to restore edges to the now non-existent $A$ compsosite node. In order to tackle this I created the group manager class.
+However the above code only works in a limited scenario: ungrouping nodes in the opposite order of creation. For example if you created composite nodes $A$, $B$, $C$ (chronologically and all with neighbouring edges) you would have to ungroup them in the following order: $C$, $B$, $A$. If you where to for example ungroup node $A$ first, when ungrouping $C$ it would try to restore edges to the now non-existenat $A$ compsosite node, there's an example of this in Figure~\ref{fig:clustring-without-groupmanager}. In order to fix this I created a class called group manager to monitor nodes in clusters.
 
-The Group Manager class is the primary way of keeping track of nodes that are hidden inside composite nodes. It contains a tree data structure that references all the groups as well as their child nodes/groups. Now when ungrouping nodes this class is called and the parent group of the child node requested, then a new temporary edge is created to the composite node and the original edge stored in a \textit{hanging edges} object until it can be restored. Every time a group is created or destroyed the \textit{hanging edges} object is queried to see if any originl edges can be recreated.
+The Group Manager class is the primary way of keeping track of nodes that are hidden inside composite nodes. It contains a tree data structure that references all the groups as well as their child nodes/groups. When ungrouping nodes this class is called and the parent group of the child node requested, then a new temporary edge is created to the composite node and the original edge stored in a \textit{hanging edges} object until it can be restored. Every time a group is created or destroyed the \textit{hanging edges} object is queried to see if any originl edges can be recreated, as seen in Figure~\ref{fig:clustring-with-groupmanager}.
 
-\subsection{Clustering example: Without \textit{Group Manager} or \textit{Hanging Edges}}
-
-Below is an example of issues that occur when trying to ungroup nodes in the incorrect order without the supporting classes \textit{Group Manager} and the hanging edges object. As seen in the final step, all the edges are lost, a less than ideal situation and in failure of the primary test of having an isomorphic graph after grouping and ungrouping nodes.
-
-\begin{figure}[H]
+\begin{figure}[h]
 
   \begin{subfigure}[t]{0.5\textwidth}
     \centering
@@ -123,14 +120,10 @@ Below is an example of issues that occur when trying to ungroup nodes in the inc
     \end{tikzpicture}
     \caption{Ungroup $CB$. Edges between $CA\rightarrow B1$ and $CA\rightarrow B2$ will try to be restored but because there's no $CA$ in the graph these will fail.}
   \end{subfigure}
+  \caption{An example of issues that occur when trying to ungroup nodes in the incorrect order without the \textit{Group Manager}. As seen in the final step, the original edges connecting the nodes are lost.}
 \end{figure}
 
-\subsection{Clustering example: Working isomorphic grouping with helping classes.}
-As mentioned previously we want to complete the test of having an isomorphic graph after grouping and ungrouping nodes. To do this we use both a class \textit{GroupManager} and an array \textit{HangingEdges}. The \textit{GroupManager} stores a tree to monitor groups and nodes inside them, it also has some helper functions for adding groups and finding the upmost group of a certain node. The \textit{HangingEdges} array is simply a list of edges that couldn't be restored because one or more of the connected nodes where missing.
-
-In the figure below the left hand side shows the state of the graph, whilst the right hand side shows the \textit{GroupManager} as well as the content of \textit{HangingEdges}.
-
-\begin{figure}[H]
+\begin{figure}[h]
 
   \begin{subfigure}[t]{0.5\textwidth}
     \centering
@@ -225,7 +218,8 @@ In the figure below the left hand side shows the state of the graph, whilst the 
       \path (A1) edge node[left] {used} (CB);
       \path (A2) edge node[right] {used} (CB);
     \end{tikzpicture}
-    \caption{CA is ungrouped and removed from the group manager tree. The original edges $A1\rightarrow B1$ and $A2\rightarrow B2$ can't be restored because B1 and B2 are currently hidden inside CB, these edges are stored in the hanging edges object. New edges are created by finding the upmost node using the group manager tree.}
+    \caption{CA is ungrouped and removed from the group manager tree. The original edges $A1\rightarrow B1$ and $A2\rightarrow B2$ can not be restored because B1 and B2 aren not in the graph, these edges are stored in the hanging edges object. New edges are created by finding the prent node using the group manager.}
+	\label{fig:clustring-without-groupmanager}
   \end{subfigure}
   ~
   \begin{subfigure}[t]{0.5\textwidth}
@@ -265,4 +259,6 @@ In the figure below the left hand side shows the state of the graph, whilst the 
     \end{tikzpicture}
     \caption{The GMTree is empty because there's no groups. Hangingedges = [] because the previously stored edges have been restored.}
   \end{subfigure}
+  \caption{The same example as in Figure~\ref{fig:clustring-without-groupmanager} except this time using the group manager and hanging edges. The group manager stores a tree to track groups and internal nodes as seen on the right hand side. Hanging edges stores a list of edges that have not been restored yet because one or more connected nodes were missing.}
+	\label{fig:clustring-with-groupmanager}
 \end{figure}
