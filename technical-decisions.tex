@@ -1,6 +1,6 @@
-\chapter{Implementation}
+\section{Implementation}
 
-\section{Web Technologies}
+\subsection{Web Technologies}
 \label{sec:web_technologies}
 
 As we saw above, I implemented my prototype as a web application. The criteria for picking an implementation platform was that of accessibility to users and speed of development. Using that criteria I decided to make my prototype a web application as it's only entry barrier to users is that of a modern web browser. Web applications are a field that I have experience with and can quickly develop in. 
@@ -11,14 +11,14 @@ An alternative to a web application would be to write the prototye in an OS inde
 
 The standard technology for data visualisation in a browser is the D3.js\footnote{D3: Data Driven Documents \url{https://d3js.org/}} JavaScript library. However as mentioned earlier, I used Cytoscape.js to implement my interface because it's specifically focused on graph theory and has a lot of inbuilt functions such as rendering and events. If this application was to be re-written using D3, a lot more of the fundemental functions of Cytoscape would have to be written from scratch, however it would allow for more fine-grained control of the appplication, this could particularly be useful when dealing with exceptionally large files.
 
-\section{Client Side Processing}
+\subsection{Client Side Processing}
 \label{sec:client_side_processing}
 
 As we saw before, the visualiser loads the file on the client side and renders it locally. When first outlining features of the application I wanted it to be primarily stand alone. This means that even though it can run of a web server, you could just as easily run it locally on your computer with minimal effort because all proccessing and computation is done client side. 
 
 However server side computation may be a useful feature for the future, a server with higher computational power and resources may be able to find and analyze interesting details about the file. The naive approach to accomplishing this would to have the file uploaded to the server, analytics run on the provenance and then results downloaded back to the client. An alternative approach however would to have the client select only the neccessary sectinos required for analysis and send those to the server. The client could then render the provenance locally whilst results where computed and finally render the results onto the already drawn graph. This allows the user to begin exploring the graph immediately as well as minimising the amount of bandwidth used by the application.
 
-\section{Node Clustering}
+\subsection{Node Clustering}
 One of the earliest features we discussed when outlining how to visualise provenance was the ability to cluster and create composite nodes. The feature of allowing multiple nodes to be grouped into a single representative node has two main purposes. Firstly it allows simplification of the graph, this is useful when showing someone a speficit section of the graph as well as easier conceptual understanding when exploring. Secondly it is useful when securing graphs and composite nodes can be used to obviscate information.
 
 Cytoscape.js doesn't have a group feature, so it was required to write one from scratch. The key test for this function is that grouping and ungrouping nodes is undestructive: if a series of nodes are grouped and then ungrouped the resulting graph must be isomorphic to the original.

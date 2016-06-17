@@ -1,4 +1,6 @@
-\chapter{Prototype design}
+\chapter{Working Prototype}
+
+\section{Functions and Design}
 
 In order to effectively assess the effectiveness of a clustering model we created a prototype interface that could be used to demo the different features when usability testing. We created a web application called ProvOwl that reads provenance from the PROV format and renders a directed acyclic graph that users can explore by panning, zooming and rearranging nodes.
 
@@ -23,7 +25,7 @@ When designing and selecting the features I would implement I used Ben Shneiderm
 
 Whilst implementing ProvOwl I continually came back to this list of tasks as a grounding point. Below I describe the main features of the interface. 
 
-\section{Movement and Rearranging}
+\subsection{Movement and Rearranging}
 \label{sec:movement_and_rearranging}
 
 On first opening a provenance graph, the viewport is positioned to fit an entire graph on screen as seen in Figure~\ref{fig:interface-example}. This acomplishes the \textit{overview} task from above and allows the user to view all the provenance at once. Users can then pan around by clicking and dragging. Zooming is accomplished by pressing ctrl+[+,-] or by using the scroll wheel. In large graphs this allows users to zoom in on areas of interest. 
@@ -39,7 +41,7 @@ By default the graph's overall layout is detemined using a JavaScript library ca
 
 Although initial placement is determined using the dagre algorithm, users can also re-arrange nodes manually by clicking and dragging a node. Note that this causes some issues when users are trying to pan, instead of cliking and dragging the background they accidentally click and move a node instead.
 
-\section{Details on demand}
+\subsection{Details on demand}
 \label{sec:details_on_demand}
 
 When a user selects a single or group of nodes the details panel is shown, as in Figure~\ref{fig:interface-details}. This displays information about the node as well as all its properties. At the bottom of the panel in blue text are contexual hyperlinks that enable functions such as renaming and in the case of multiple selected nodes, grouping. As suggested by the title, this directly immplements the taks of details-on-demand.
@@ -51,7 +53,7 @@ When a user selects a single or group of nodes the details panel is shown, as in
 	\label{fig:interface-details}
 \end{figure}
 
-\section{Clustering}
+\subsection{Clustering}
 \label{sec:clustering}
 
 As mentioned in Section~\ref{sec:user_defined_clusters} I have implemented two ways of clustering nodes, manually and via a search function. In both cases once the user activates the group function, the currently selected nodes are animated to their new position (the node closest to root) and replaced by a composite node, represented by a light blue oval. 
@@ -78,7 +80,7 @@ In Figure~\ref{fig:search1} you can see an example of this. Open inside the Prov
 
 \clearpage
 
-\section{History}
+\subsection{History}
 \label{sec:history}
 
 Having the ability to undo and redo actions is one of the above mentioned tasks for designing advance graphical interfaces and I believe one of the most important. It allows users to confidently and safely explore information without fear of causing permanent damage. My interface tracks primarily the movement and clustering of nodes. The undo and redo buttons allow users to step backwards and forwards through these actions. Using the history icon in the top right corner of the interface toggles a history pane (as seen in Figure~\ref{fig:interface-history}) that shows the user what step they are currently at. 
@@ -90,12 +92,12 @@ Having the ability to undo and redo actions is one of the above mentioned tasks 
 	\label{fig:interface-history}
 \end{figure}
 
-\section{Sharing}
+\subsection{Sharing}
 \label{sec:sharing}
 
 In the top bar of Figure~\ref{fig:interface-history} there is a menu-bar option to export the current graph. This dropdown menu allows the user to either save the entire graph, or just the current viewport, as an image. The option to export just the viewport allows a user to focus on a certain section. This is related to the share task above and allows easy sharing of provenance files with other people for feedback and analysis. In the future I would also like to be able to export the current graph in PROV format with notation for clustered nodes.
 
-\section{Click tracker}
+\subsection{Click tracker}
 \label{sec:click_tracker}
 
 To facilitate with usability testing and by recommendation of Judy Kay I implemented a click tracker into the application. This simply logs clicks that the user makes, capturing time, location and element that the user clicked on. This could then be downloaded via the export command as a CSV file.  You can see below an example of the file generated from exploring the IR-baseline prov file.
