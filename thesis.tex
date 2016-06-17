@@ -15,13 +15,26 @@
 \usepackage{graphicx}
 \usepackage{hyperref} 
 \usepackage{listings} 
-\usepackage{natbib}
 \usepackage{subcaption} 
+\usepackage[
+    backend=biber,
+    natbib=true,
+	style=numeric,
+    url=true, 
+    doi=true,
+    eprint=false
+]{biblatex}
 \usepackage{tabularx} 
 \usepackage{tabu} 
 \usepackage{tikz} 
 \usepackage{url}
 \usepackage{wrapfig} 
+
+\addbibresource{bibliography.bib}
+\newcommand{\littitle}[1]{
+\subsection{\citetitle{#1}~\textcite{#1}}
+}
+ 
 
 \usetikzlibrary{arrows}
 \usetikzlibrary{shapes,snakes}
@@ -98,8 +111,7 @@
 
 \include{future} % planned future work
 
-\bibliography{bibliography,bibliography_PM}
-\bibliographystyle{plain}
+\printbibliography
 
 \include{appendix}
 

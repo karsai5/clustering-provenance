@@ -8,6 +8,9 @@
 *.toc
 *.bbl
 *.un~
+*.dvi
+*.bcf
+*.run.xml
 
 # revision file
 revision.tex
