@@ -1,8 +1,6 @@
 \chapter{Working Prototype}
 
-\section{Functions and Design}
-
-In order to effectively assess the effectiveness of a clustering model we created a prototype interface that could be used to demo the different features when usability testing. We created a web application called ProvOwl that reads provenance from the PROV format and renders a directed acyclic graph that users can explore by panning, zooming and rearranging nodes.
+In order to assess the effectiveness of the clustering techniques described above I decided to create a prototype application that would implement them. This prototype could then be used in usability studies to assess the effectiveness and usability of the clustering techniques. The prototype I created was a web application called ProvOwl, Figure~\ref{fig:interface-example} shows a screenshot of it open with one of the provenance files from the usability study. It reads provenance in the PROV-N format and renders a directed acyclic graph for users to interact with. ProvOwl is available to play with at \href{http://provowl.com/?file=prov-examples/provn/fitbit_score.provn}{ProvOwl.com} and the source code is available at \href{https://github.com/karsai5/ProvOwl}{github.com/karsai5/ProvOwl}. Below I go into detail about the features implemented in the prototype as well as information about the specifics of its implementation.
 
 \begin{figure}[h]
 \centering
@@ -11,19 +9,11 @@ In order to effectively assess the effectiveness of a clustering model we create
 \label{fig:interface-example}
 \end{figure}
 
-When designing and selecting the features I would implement I used Ben Shneiderman's paper \textit{The eyes have it}~\cite{Shneiderman1996} as a foundation. In this paper he outlines seven visualisation tasks that are a useful starting point for designing advance graphical user interfaces. The tasks (taken directly from Shneiderman's paper) are as follows:
+\section{Functions and Design}
 
-\begin{itemize}
-\item Overview: Gain an overview of the entire collection. 
-\item Zoom : Zoom in on items of interest 
-\item Filter: Filter out uninteresting items. 
-\item Details-on-demand: Select an item or group and get details when needed.
-\item Relate: View relations hips among items. 
-\item History: Keep a history of actions to support undo, replay, and progressive refinement.
-\item Extract: Allow extraction of sub-collections and of the query parameters. 
-\end{itemize}
+When creating the prototype I quickly discovered that the clustering functions could not be implemented in a vacuum and that a usable graph exploration tool would require other features as well. I used \citeauthor{Shneiderman1996}'s \citetitle{Shneiderman1996}~\cite{Shneiderman1996} as a starting point for creating a usable interface. In his paper he outlines seven usability tasks that should be taken into consideration when creating an advance graphical user interface. These where: \textit{Overview:} a user should be able to view the entire entity been visualised, this is important in giving them a sense of location and scale. \textit{Zoom:} When a user finds a point of interest they should be able to zoom in to view it in more detail. \textit{Filter:} Users should be able to limit what they see on screen to remove information they do not find useful. \textit{Deatils-on-demand:} A user should be able to view details about elements when they want. But the details should not be constantly on screen and cluttering the view. \textit{Relate:} Information between items should be visible; How information flows from one element to another. \textit{History:} Allow users to be able to undo and replay their actions, this is important in reassuring them that their actions are not permanent and they are free to make mistakes. \textit{Extract:} Once a user has found something interesting they should be able to extract their queries for later exploration or sharing.
 
-Whilst implementing ProvOwl I continually came back to this list of tasks as a grounding point. Below I describe the main features of the interface. 
+Using these usability tasks as a starting point I implemented five main features. Each feature is described below as well as the reasoning behind implementing it and its relations to \citeauthor{Shneiderman1996}'s seven tasks.
 
 \subsection{Movement and Rearranging}
 \label{sec:movement_and_rearranging}
