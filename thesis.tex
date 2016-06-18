@@ -34,8 +34,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 
-\renewcommand{\chaptermark}[1]{%
-\markboth{\MakeUppercase{#1}}}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
 
 \fancyhead{} % clear all header fields
 \fancyhead[LO,LE]{\leftmark}
