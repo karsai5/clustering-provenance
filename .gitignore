@@ -11,6 +11,7 @@
 *.dvi
 *.bcf
 *.run.xml
+*.ptc
 
 # revision file
 revision.tex
