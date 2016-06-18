@@ -32,12 +32,12 @@ On first opening a provenance graph, the viewport is positioned to fit an entire
 
 By default the graph's overall layout is detemined using a JavaScript library called dagre that generates layouts for directed acyclic graphs client side. The main skeleton of the algorithm implemented to acomplish this comes from the paper ``A technique for Drawing Directed Graphs''~\cite{Gansner1993}. In early prototypes other layout options where made available such as circle and breadth-first, but this confused users and where later removed in favor of using dagre exclusively for layout.
 
-\begin{wrapfigure}{r}{0.3\textwidth}
+\begin{figure}[h]
 	\centering
-	\includegraphics[width=\linewidth]{interface-details-close}
+	\includegraphics[width=5cm]{interface-details-close}
 	\caption{A close up of the details panel from Figure~\ref{fig:interface-details}}
 	\label{fig:key-concepts}
-\end{wrapfigure}
+\end{figure}
 
 Although initial placement is determined using the dagre algorithm, users can also re-arrange nodes manually by clicking and dragging a node. Note that this causes some issues when users are trying to pan, instead of cliking and dragging the background they accidentally click and move a node instead.
 
