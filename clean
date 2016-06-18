@@ -1,0 +1,9 @@
+rm *.log
+rm *.out
+rm *.toc
+rm *.dvi
+rm *.blg
+rm *.bcf
+rm *.bbl
+rm *.ptc
+rm *.run.xml
