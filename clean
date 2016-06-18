@@ -2,6 +2,7 @@ rm *.log
 rm *.out
 rm *.toc
 rm *.dvi
+rm *.aux
 rm *.blg
 rm *.bcf
 rm *.bbl
