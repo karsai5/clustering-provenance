@@ -14,28 +14,44 @@
 \usepackage{fullpage}
 \usepackage{titletoc}
 \usepackage{graphicx}
+\usepackage[a4paper,margin=1.3in,headheight=20pt,footskip=.6in,headsep=.2in]{geometry}
 \usepackage{hyperref} 
 \usepackage{listings} 
 \usepackage{subcaption} 
 \usepackage[
-    backend=biber,
-    natbib=true,
+	backend=biber,
+	natbib=true,
 	style=numeric,
-    url=true, 
-    doi=true,
-    eprint=false
+	url=true, 
+	doi=true,
+	eprint=false
 ]{biblatex}
 \usepackage{tabularx} 
 \usepackage{tabu} 
 \usepackage{tikz} 
 \usepackage{url}
 \usepackage{wrapfig} 
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\renewcommand{\chaptermark}[1]{%
+\markboth{\MakeUppercase{#1}}}{}}
+
+\fancyhead{} % clear all header fields
+\fancyhead[LO,LE]{\leftmark}
+\fancyhead[RO,RE]{\thesection}
+
+\fancyfoot{}
+\fancyfoot[RO,LE]{\thepage}
+\fancyfoot[LO,RE]{Linus Karsai}
+
+\renewcommand{\headrulewidth}{0.4pt}
 
 \addbibresource{bibliography.bib}
 
 % Related work title/citation
 \newcommand{\relatedwork}[1]{
-\textit{\citetitle{#1} \textcite{#1}}
+	\textit{\citetitle{#1} \textcite{#1}}
 }
 
 
