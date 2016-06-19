@@ -13,28 +13,21 @@ In order to assess the effectiveness of the clustering techniques described abov
 
 When creating the prototype I quickly discovered that the clustering functions could not be implemented in a vacuum and that a usable graph exploration tool would require other features as well. I used \citeauthor{Shneiderman1996}'s \citetitle{Shneiderman1996}~\cite{Shneiderman1996} as a starting point for creating a usable interface. In his paper he outlines seven usability tasks that should be taken into consideration when creating an advance graphical user interface. These where: \textit{Overview:} a user should be able to view the entire entity been visualised, this is important in giving them a sense of location and scale. \textit{Zoom:} When a user finds a point of interest they should be able to zoom in to view it in more detail. \textit{Filter:} Users should be able to limit what they see on screen to remove information they do not find useful. \textit{Deatils-on-demand:} A user should be able to view details about elements when they want. But the details should not be constantly on screen and cluttering the view. \textit{Relate:} Information between items should be visible; How information flows from one element to another. \textit{History:} Allow users to be able to undo and replay their actions, this is important in reassuring them that their actions are not permanent and they are free to make mistakes. \textit{Extract:} Once a user has found something interesting they should be able to extract their queries for later exploration or sharing.
 
-Using these usability tasks as a starting point I implemented six main features: \textit{Movement and rearranging, details on demand, clustering, undo, sharing and click tracking}. Each feature is described below as well as the reasoning behind implementing it and its relations to \citeauthor{Shneiderman1996}'s seven tasks. 
+Using these usability tasks as a starting point I implemented six main features: \textit{Movement and rearranging, details panel, clustering, undo, sharing and click tracking}. Each feature is described below as well as the reasoning behind implementing it and its relations to \citeauthor{Shneiderman1996}'s seven tasks. 
 
 \subsection{Movement and Rearranging}
 \label{sec:movement_and_rearranging}
 
-On first opening a provenance graph, the viewport is positioned to fit an entire graph on screen as seen in Figure~\ref{fig:interface-example}. This acomplishes the \textit{overview} task from above and allows the user to view all the provenance at once. Users can then pan around by clicking and dragging. Zooming is accomplished by pressing ctrl+[+,-] or by using the scroll wheel. In large graphs this allows users to zoom in on areas of interest. 
+On first opening a provenance graph, the viewport is positioned to fit the entire graph on screen as seen in Figure~\ref{fig:interface-example}. This accomplishes \citeauthor{Shneiderman1996}'s \textit{overview} task and allows the user to gain an overview of the provenance. Users can then pan around by clicking and dragging. Zooming is accomplished by pressing ctrl+[+,-] or by using the scroll wheel (accomplishing the \textit{zoom} task). 
 
-By default the graph's overall layout is detemined using a JavaScript library called dagre that generates layouts for directed acyclic graphs client side. The main skeleton of the algorithm implemented to acomplish this comes from the paper ``A technique for Drawing Directed Graphs''~\cite{Gansner1993}. In early prototypes other layout options where made available such as circle and breadth-first, but this confused users and where later removed in favor of using dagre exclusively for layout.
+By default the graph's overall layout is detemined using a JavaScript library called dagre\footnote{Dagre javascript library for determining the layout of directed acyclic graphs: \url{https://github.com/cpettitt/dagre}} that generates layouts for directed acyclic graphs client side. The main skeleton of the algorithm implemented to acomplish this comes from the paper \citetitle{Gansner1993} by \citeauthor{Gansner1993}~\cite{Gansner1993}. In early versions of the prototype other layout options where available such as circle and breadth-first, but this confused users and where later removed in favour of using dagre exclusively for layout.
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=5cm]{interface-details-close}
-	\caption{A close up of the details panel from Figure~\ref{fig:interface-details}}
-	\label{fig:key-concepts}
-\end{figure}
+Although initial placement is determined using the dagre algorithm, users can also re-arrange nodes manually by clicking and dragging a node. This is different from clicking and dragging on the background which allows users to pan, users did not seem to have any difficulty differentiating between the two.
 
-Although initial placement is determined using the dagre algorithm, users can also re-arrange nodes manually by clicking and dragging a node. Note that this causes some issues when users are trying to pan, instead of cliking and dragging the background they accidentally click and move a node instead.
-
-\subsection{Details on demand}
+\subsection{Details panel}
 \label{sec:details_on_demand}
 
-When a user selects a single or group of nodes the details panel is shown, as in Figure~\ref{fig:interface-details}. This displays information about the node as well as all its properties. At the bottom of the panel in blue text are contexual hyperlinks that enable functions such as renaming and in the case of multiple selected nodes, grouping. As suggested by the title, this directly immplements the taks of details-on-demand.
+When a user selects a single or group of nodes the details panel is shown, as seen in the top left of Figure~\ref{fig:interface-details} with the header ``Node information''. This lists the attributes and properties of a node\footnote{Note that both attributes and properties are referred to when discussing nodes although I sometimes use the terms interchangeably they are intrinsically different things. Attributes are data related to the semantics of the node, such as its id and name, whilst properties are key value pairs that can be arbitrarily added to nodes. In most cases there is no reason to treat them differently.} as per \citeauthor{Shneiderman1996}'s \textit{details-on-demand} task. At the bottom of the panel in blue text is th list of contexual hyperlinks that enable functions such as renaming and in the case of multiple selected nodes, grouping. Having this panel only appear when nodes are selected means it is not using up space when not displaying information. 
 
 \begin{figure}[h]
 	\centering
@@ -42,18 +35,24 @@ When a user selects a single or group of nodes the details panel is shown, as in
 	\caption{A screenshot of ProvOwl with the \texttt{IR-baseline} prov file open. A indicated by the red outline, the node \texttt{TwitterFeed-time-1} has been selected and details about it such as name and classification status are shown in the details panel in the top left.}
 	\label{fig:interface-details}
 \end{figure}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=5cm]{interface-details-close}
+	\caption{A close up of the details panel from Figure~\ref{fig:interface-details}}
+	\label{fig:key-concepts}
+\end{figure}
+
 
 \subsection{Clustering}
 \label{sec:clustering}
 
-As mentioned in Section~\ref{sec:user_defined_clusters} I have implemented two ways of clustering nodes, manually and via a search function. In both cases once the user activates the group function, the currently selected nodes are animated to their new position (the node closest to root) and replaced by a composite node, represented by a light blue oval. 
+As mentioned in Section~\ref{sec:user_defined_clusters} I implemented two ways of clustering nodes, \textit{click+ctrl} and via the search function. In both cases once the user clicks the group link, the currently selected nodes are animated to their new position (the node closest to root) and replaced by a composite node, represented by a light blue oval. 
 
-To manually cluster nodes a user first selects multiple nodes at once, by clicking on each whilst holding down \textit{ctrl}. Once multiple nodes have been selected the user cn group them together either with \textit{ctrl+g} or by selecting the group nodes hyperlink from the details panel.
+To manually cluster nodes a user first selects multiple nodes at once, by clicking on each whilst holding down \textit{ctrl}. Once multiple nodes have been selected the user can group them together either by pressing \textit{ctrl+g} or by selecting the ``group nodes'' hyperlink, as seen in the details panel of Figure~\ref{fig:search1}.
 
-The above method is tedious for more than a handful of nodes so I also implemented the search function. By opening up the search panel the user has access to a search field. The search function takes the value inputted by the user and runs a regex match on each property of each node. If any property of a node matches the regex it is selected (as indicated by a red outline).
+The above method is great for a small number of nodes but less effective if a user is trying to cluster more than a dozen nodes, hence the search method of clustering was also implemented. By selecting search from the toolbar the search panel is shown. The search function takes the value entered by the user and runs a regex match on each property of each node. If any property of a node matches the regex it is selected (as indicated by a red outline).
 
-In Figure~\ref{fig:search1} you can see an example of this. Open inside the ProvOwl interface is \textit{IR-baseline.prov}, an abstract example that shows the provenance of a report that is created to show analytical information about twitter data from two different users. On the right hand side of the screen is the search panel with the regex text \texttt{X-tweets|query-X-Time}. This query is run on all the nodes and because the pipe (\texttt{|}) characted represents an OR operator in regex hilights all the nodes that are either names \texttt{X-tweets-*} or \texttt{query-X-Time-*}. Once thses nodes are hilighted (as indicated by the red outline) they can be clustered into a composite node as seen in Figure~\ref{fig:search2}.
-
+In Figure~\ref{fig:search1} you can see an example of this. On the top right of the screen is the search panel with the input \texttt{X-tweets|query-X-Time}. This query is run on all the nodes and because of the pipe (\texttt{|}) character it selects all nodes that are either named \texttt{X-tweets-*} or \texttt{query-X-Time-*}. Once these nodes are highlighted (as indicated by the red outline) they can be clustered into a composite node by pressing enter, pressing \textit{ctrl+g} or clicking ``group nodes''. This results in the selected nodes been animated to their new position and replaced by a composite node as seen in Figure~\ref{fig:search2}.
 
 \begin{figure}[h]
 	\centering
@@ -73,24 +72,26 @@ In Figure~\ref{fig:search1} you can see an example of this. Open inside the Prov
 \subsection{Undo/Redo}
 \label{sec:history}
 
-Having the ability to undo and redo actions is one of the above mentioned tasks for designing advance graphical interfaces and I believe one of the most important. It allows users to confidently and safely explore information without fear of causing permanent damage. My interface tracks primarily the movement and clustering of nodes. The undo and redo buttons allow users to step backwards and forwards through these actions. Using the history icon in the top right corner of the interface toggles a history pane (as seen in Figure~\ref{fig:interface-history}) that shows the user what step they are currently at. 
+Having the ability to undo and redo actions is an implementation of \citeauthor{Shneiderman1996}'s \textit{history} task and I believe it to be one of the most impactful features for ensuring ease of use. Allowing users to undo and redo their actions gives them a sense that their changes are not permanent and allows exploration of features and the graph without fear of causing irreparable damage. ProvOwl tracks the movement and clustering of nodes. The undo and redo buttons in the toolbar allow users to step backwards and forwards through these actions. Using the history icon in the top right corner of the interface toggles a history pane (as seen in Figure~\ref{fig:interface-history}) that shows the user what step they are currently at. 
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.8\linewidth]{interface-history}
-	\caption{In the top right of the interface can be seen the history panel. This indicates what step of history the user is currently at. The user can use the undo and redo commands in the top bar to move backwards and forwards.}
+	\caption{In the top right of the interface can be seen the history panel. This indicates what step of history the user is currently at (with bold text). The user can use the undo and redo commands in the toolbar to move backwards and forwards.}
 	\label{fig:interface-history}
 \end{figure}
 
 \subsection{Sharing}
 \label{sec:sharing}
 
-In the top bar of Figure~\ref{fig:interface-history} there is a menu-bar option to export the current graph. This dropdown menu allows the user to either save the entire graph, or just the current viewport, as an image. The option to export just the viewport allows a user to focus on a certain section. This is related to the share task above and allows easy sharing of provenance files with other people for feedback and analysis. In the future I would also like to be able to export the current graph in PROV format with notation for clustered nodes.
+Once a user has explored a graph and found a point of interest they should be able to save their progress. As described by \citeauthor{Shneiderman1996} while describing the \textit{extract} task, this allows further exploration at a later date and the ability to share points of interest with other people.
+
+In the toolbar is the export command. This dropdown menu allows the user to either save the entire graph or the current viewport as an image. The option to export just the viewport allows a user to focus on a certain section. 
 
 \subsection{Click tracking}
 \label{sec:click_tracker}
 
-To facilitate with usability testing and by recommendation of Judy Kay I implemented a click tracker into the application. This simply logs clicks that the user makes, capturing time, location and element that the user clicked on. This could then be downloaded via the export command as a CSV file.  You can see below an example of the file generated from exploring the IR-baseline prov file.
+To facilitate with usability testing and by recommendation of Judy Kay I implemented a click tracker. This logs clicks that the user makes, capturing time, location and which element the user clicked on. This can then be downloaded via the export command as a CSV file.  You can see below an example of the csv file generated from exploring a provenance file. This feature doesn't relate to usability and therefore doesn't address any of \citeauthor{Shneiderman1996}'s tasks, instead it is intended to be used as a tool for usability analysis.
 
 
 \begin{figure}[h]
@@ -105,24 +106,22 @@ To facilitate with usability testing and by recommendation of Judy Kay I impleme
 \subsection{Web Technologies}
 \label{sec:web_technologies}
 
-As we saw above, I implemented my prototype as a web application. The criteria for picking an implementation platform was that of accessibility to users and speed of development. Using that criteria I decided to make my prototype a web application as its only entry barrier to users is that of a modern web browser. I took the Prov-O-Vis~\cite{Hoekstra2014} system as inspiration as it was the most accesible of the availble provenance visualisers and this is partially because it is available online. Web applications are a field that I have experience with and can quickly develop in. 
+I implemented my prototype as a web application. The criteria for picking an implementation platform was that of accessibility to users and speed of development. Using this criteria I decided to make ProvOwl a web application as its only entry barrier to users is that of a modern web browser. I took the Prov-O-Vis~\cite{Hoekstra2014} system as inspiration as it was the most accessible of the available provenance visualisers. Web applications are a field that I have experience with and can quickly develop in. 
 
-There are a few pitfalls to this approach that can be addressed through alternative implementations. Because my application is primarily a prototype for illustrating effective exploration features, the issue of scale is not one that is addressed. If a web application was used for enterprise size provenance files the application may run out of resources; further testing and alternative approaches may be required.
+There were a few pitfalls to this approach that can be addressed through alternative implementations. Because my application is primarily a prototype for testing the usability of manual clustering implementations, the issue of scale is not one that is addressed. If a web application was used for larger provenance files the application may run out of resources in these cases further testing and alternative approaches may be required.
 
-An alternative to a web application would be to write the prototye in an OS independent language such as Java or Python; this would allow wide accessibility and more fine grained control of machine resources. However if an OS level language was chosen issues could later occur in presenting provenance on mobile devices and a mobile version of the interface may need to be written. Alternatively if an OS dependant language such as Apple's swift of Microsoft's C\# was used features and code would have to be replicated for the different OS languages (assuming that OS independent accessibility is an important criteria).
+An alternative to a web application would be to write ProvOwl in an OS independent language such as Java or Python; this would allow wide accessibility and more fine grained control of machine resources. However if an OS level language was chosen issues could later occur in presenting provenance on mobile devices and a mobile version of the interface may need to be written. Alternatively if an OS dependant language such as Apple's swift of Microsoft's C\# was used features and code would have to be replicated for across the implementations in different languages.
 
-The standard technology for data visualisation in a browser is the D3.js\footnote{D3: Data Driven Documents \url{https://d3js.org/}} JavaScript library. However as mentioned earlier, I used Cytoscape.js to implement my interface because it is specifically focused on graph theory and has a graph functions built in (such as distance algorithms). 
+The standard technology for data visualisation in a browser is the D3.js\footnote{D3: Data Driven Documents \url{https://d3js.org/}} JavaScript library. However as mentioned earlier, I used Cytoscape.js to implement my interface because it is specifically focused on graph theory and has graph related functions built in (such as distance algorithms). 
 
 \subsection{Client Side Processing}
 \label{sec:client_side_processing}
 
-When a provenance file is selected ProvOwl loads the file and renders it all locally. When first outlining features of the application I wanted it to be primarily stand alone. This means that even though it can run from a web server, you could just as easily run it locally on your computer with minimal effort as all computations are done client side.
-
-However server side computation may be a useful feature for the future, a server with higher computational power and resources may be able to find and analyze interesting details about a file. A simple approach to accomplish this would to have the file uploaded to the server, analytics run on the provenance and then results loaded back to the client. For larger provenance files this could be extended to only load sections required for analysis reducing the bandwidth required. The client could render the provenance locally whilst results where computed and then rendered onto the already drawn graph. This would allow the user to begin exploring the graph with minimal delay while extra information is calculated server side.
+When first outlining features of the application I wanted it to be primarily stand alone. Because of this I created PovOwl so that when a provenance file is selected its loaded and rendered client side.This means that even though it run from a web server, no client side computation is required, it can be just as easily run locally on a computer after cloning from the git repo and running a python web server\footnote{Python's SimpleHTTPServer command can be used to get a web server up and running in a directory, this is described in more detail in this web article: \url{http://www.linuxjournal.com/content/tech-tip-really-simple-http-server-python}}.
 
 \subsection{Node Clustering}
 
-Creating a clustering functino in Cytoscape.js required some time and effort because it currently doesn't have a clustering feature, so I was required to write one from scratch. The goal of this function was to have grouping and ungrouping nodes been undestructive: if a series of nodes are grouped and then ungrouped the resulting graph should be isomorphic to the original.
+Creating a clustering function in Cytoscape.js required some time and effort because it currently does not have a clustering feature, so I was required to write one from scratch. The goal of this function was to have grouping and ungrouping nodes be non-destructive: if a series of nodes were grouped and ungrouped the resulting graph should be isomorphic to the original.
 
 \begin{figure}[h]
   \centering
@@ -138,9 +137,9 @@ Creating a clustering functino in Cytoscape.js required some time and effort bec
   \caption{A provenance that has had a subset of its nodes clustered. In an early version of the prototype composite nodes were given random alphanumeric names as seen on the right.}
 \end{figure}
 
-Nodes removed from Cytoscape.js can be `restored' into their original position, unfortunately any edged associated with a removed node are permanently destroyed. It is necessary then to store the edges as a data field in the composite node so that when restoring nodes, edges can also be recreated. 
+Cytoscape.js has a ``remove'' function that will hide a node. Hidden nodes can then be `restored' into their original position, unfortunately any edges associated with a removed node are permanently destroyed. It was necessary then to store the edges as a data field in the composite node so that when restoring nodes, the original edges could also be recreated. 
 
-The pseudocode below creates a new cluster. It creates a new node and stores the selected nodes and their edges as properties of it. Then new edges are created from surrounding nodes to the composite node. Finally the selected nodes are ``removed'' so that they are no longer visible.
+Described below is the pseudocode to create a new cluster. It creates a new node and stores the selected nodes and their edges as properties of it. Then new edges are created to replace the edges that originally linked external nodes to the clustered nodes. Finally the selected nodes are ``removed'' so that they are no longer visible.
 
 \begin{figure}[h]
   \centering
@@ -160,12 +159,12 @@ The pseudocode below creates a new cluster. It creates a new node and stores the
  // Remove original nodes
  Remove selected nodes
  \end{lstlisting}
- \caption{Pseudocode: Creaing a composite node}
+ \caption{Pseudocode of creating a composite node}
 \end{figure}
 
-However the above code only works in a limited scenario: ungrouping nodes in the opposite order of creation. For example if you created composite nodes $A$, $B$, $C$ (chronologically and all with neighbouring edges) you would have to ungroup them in the following order: $C$, $B$, $A$. If you where to for example ungroup node $A$ first, when ungrouping $C$ it would try to restore edges to the now non-existenat $A$ compsosite node, there's an example of this in Figure~\ref{fig:clustring-without-groupmanager}. In order to fix this I created a class called group manager to monitor nodes in clusters.
+However the above code only works in a limited scenario, particularly when ungrouping nodes in the opposite order of creation. For example if you created composite nodes $A$, $B$, $C$ (chronologically and with neighbouring edges) you would have to ungroup them in the following order: $C$, $B$, $A$. If you where to ungroup node $A$ first, when ungrouping $C$ it would try to restore edges to the now non-existent composite node $A$, there is an example of this in Figure~\ref{fig:clustring-without-groupmanager}. In order to fix this I created a class called GroupManager to monitor nodes in clusters.
 
-The Group Manager class is the primary way of keeping track of nodes that are hidden inside composite nodes. It contains a tree data structure that references all the groups as well as their child nodes/groups. When ungrouping nodes this class is called and the parent group of the child node requested, then a new temporary edge is created to the composite node and the original edge stored in a \textit{hanging edges} object until it can be restored. Every time a group is created or destroyed the \textit{hanging edges} object is queried to see if any originl edges can be recreated, as seen in Figure~\ref{fig:clustring-with-groupmanager}.
+The Group Manager class is the primary way of keeping track of nodes that are hidden inside composite nodes. It contains a tree data structure that references all the groups as well as their child nodes/groups. When unclustering nodes that have edges to nodes not currently in the graph, this class is called and the parent cluster of the node requested, then a new temporary edge can be created linking the composite node and the original edge is stored in an object called \textit{hanging edges} until it can be restored. Every time a cluster is created or destroyed the \textit{hanging edges} object is queried to see if any original edges can be recreated, as seen in Figure~\ref{fig:clustring-with-groupmanager}.
 
 \begin{figure}[h]
 

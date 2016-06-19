@@ -84,3 +84,12 @@ Possiblty the biggest challenge in this section would be that of paramaterised c
 
 A possible future endevour would be automation of clustering. Where the application woudl suggest clusterings based on previous provenance workloads. It may then group together infrequently accessed nodes to make it easier to access infrequently used nodes.
 
+\subsection{Sharing graphs}
+\label{sub:sharing_graphs}
+
+In the future I would also like to be able to export the current graph in PROV format with notation for clustered nodes.
+
+\subsection{Server side computation}
+\label{sub:server_side_computation}
+
+Server side computation may be a useful feature for the future, a server with higher computational power and resources may be able to find and analyze interesting details about a file. A simple approach to accomplish this would to have the file uploaded to the server, analytics run on the provenance and then results loaded back to the client. For larger provenance files this could be extended to only load sections required for analysis reducing the bandwidth required. The client could render the provenance locally whilst results where computed and then rendered onto the already drawn graph. This would allow the user to begin exploring the graph with minimal delay while extra information is calculated server side.
