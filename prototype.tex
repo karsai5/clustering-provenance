@@ -13,7 +13,7 @@ In order to assess the effectiveness of the clustering techniques described abov
 
 When creating the prototype I quickly discovered that the clustering functions could not be implemented in a vacuum and that a usable graph exploration tool would require other features as well. I used \citeauthor{Shneiderman1996}'s \citetitle{Shneiderman1996}~\cite{Shneiderman1996} as a starting point for creating a usable interface. In his paper he outlines seven usability tasks that should be taken into consideration when creating an advance graphical user interface. These where: \textit{Overview:} a user should be able to view the entire entity been visualised, this is important in giving them a sense of location and scale. \textit{Zoom:} When a user finds a point of interest they should be able to zoom in to view it in more detail. \textit{Filter:} Users should be able to limit what they see on screen to remove information they do not find useful. \textit{Deatils-on-demand:} A user should be able to view details about elements when they want. But the details should not be constantly on screen and cluttering the view. \textit{Relate:} Information between items should be visible; How information flows from one element to another. \textit{History:} Allow users to be able to undo and replay their actions, this is important in reassuring them that their actions are not permanent and they are free to make mistakes. \textit{Extract:} Once a user has found something interesting they should be able to extract their queries for later exploration or sharing.
 
-Using these usability tasks as a starting point I implemented five main features. Each feature is described below as well as the reasoning behind implementing it and its relations to \citeauthor{Shneiderman1996}'s seven tasks.
+Using these usability tasks as a starting point I implemented six main features: \textit{Movement and rearranging, details on demand, clustering, undo, sharing and click tracking}. Each feature is described below as well as the reasoning behind implementing it and its relations to \citeauthor{Shneiderman1996}'s seven tasks. 
 
 \subsection{Movement and Rearranging}
 \label{sec:movement_and_rearranging}
@@ -70,7 +70,7 @@ In Figure~\ref{fig:search1} you can see an example of this. Open inside the Prov
 
 \clearpage
 
-\subsection{History}
+\subsection{Undo/Redo}
 \label{sec:history}
 
 Having the ability to undo and redo actions is one of the above mentioned tasks for designing advance graphical interfaces and I believe one of the most important. It allows users to confidently and safely explore information without fear of causing permanent damage. My interface tracks primarily the movement and clustering of nodes. The undo and redo buttons allow users to step backwards and forwards through these actions. Using the history icon in the top right corner of the interface toggles a history pane (as seen in Figure~\ref{fig:interface-history}) that shows the user what step they are currently at. 
@@ -87,7 +87,7 @@ Having the ability to undo and redo actions is one of the above mentioned tasks 
 
 In the top bar of Figure~\ref{fig:interface-history} there is a menu-bar option to export the current graph. This dropdown menu allows the user to either save the entire graph, or just the current viewport, as an image. The option to export just the viewport allows a user to focus on a certain section. This is related to the share task above and allows easy sharing of provenance files with other people for feedback and analysis. In the future I would also like to be able to export the current graph in PROV format with notation for clustered nodes.
 
-\subsection{Click tracker}
+\subsection{Click tracking}
 \label{sec:click_tracker}
 
 To facilitate with usability testing and by recommendation of Judy Kay I implemented a click tracker into the application. This simply logs clicks that the user makes, capturing time, location and element that the user clicked on. This could then be downloaded via the export command as a CSV file.  You can see below an example of the file generated from exploring the IR-baseline prov file.
