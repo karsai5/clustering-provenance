@@ -223,13 +223,14 @@ The Group Manager class is the primary way of keeping track of nodes that are hi
     \caption{Ungroup $CB$. Edges between $CA\rightarrow B1$ and $CA\rightarrow B2$ will try to be restored but because there's no $CA$ in the graph these will fail.}
   \end{subfigure}
   \caption{An example of issues that occur when trying to ungroup nodes in the incorrect order without the \textit{Group Manager}. As seen in the final step, the original edges connecting the nodes are lost.}
+\label{fig:clustring-without-groupmanager}
 \end{figure}
 
 % ------------------
 % BEGIN GIANT FIGURE
 % ------------------
 
-\newgeometry{top=2cm}
+\newgeometry{top=1cm, headsep=2cm, bottom=1.8cm, footskip=4cm}
 \begin{figure}[h]
 
   \begin{subfigure}[t]{0.5\textwidth}
@@ -243,7 +244,7 @@ The Group Manager class is the primary way of keeping track of nodes that are hi
       \path (A1) edge node[left] {used} (B1);
       \path (A2) edge node[left] {used} (B2);
     \end{tikzpicture}
-    \caption{Nodes $A1$ and $B1$ are linked, nodes $A2$ and $B2$ are linked.}
+    \caption{Nodes $A1$, $B1$ and $A2$, $B2$ are connected.}
   \end{subfigure}
   ~
   \begin{subfigure}[t]{0.5\textwidth}
@@ -252,7 +253,7 @@ The Group Manager class is the primary way of keeping track of nodes that are hi
     \begin{tikzpicture}
       \node[] (root) {root};
     \end{tikzpicture}
-    \caption{The GMTree (Group Manager Tree) is currently empty and Hangingedges = [].}
+    \caption{GMTree and HangingEdges are empty.}
   \end{subfigure}
   \begin{subfigure}[t]{0.5\textwidth}
     \centering
@@ -264,7 +265,7 @@ The Group Manager class is the primary way of keeping track of nodes that are hi
       \path (CA) edge node[left] {used} (B1);
       \path (CA) edge node[right] {used} (B2);
     \end{tikzpicture}
-    \caption{Group nodes $A1$ and $A2$ into composite node $CA$. Stored inside the composite node is the original edges from $A1\rightarrow B1$ and $A2\rightarrow B2$.}
+    \caption{$A1$ and $A2$ are clustered into $CA$. Stored inside $CA$ is the lost edges $A1\rightarrow B1$ and $A2\rightarrow B2$.}
   \end{subfigure}
   ~
   \begin{subfigure}[t]{0.5\textwidth}
@@ -272,14 +273,14 @@ The Group Manager class is the primary way of keeping track of nodes that are hi
     \renewcommand\thesubfigure{B2}
     \begin{tikzpicture}
       \node[] (root) {root};
-      \node[below = 1cm of root] (CA) {CA};
+      \node[below left = 1cm of root] (CA) {CA};
       \node[below right = 1cm of CA] (A1) {A1};
       \node[below left = 1cm of CA] (A2) {A2};
       \path (root) edge (CA);
       \path (CA) edge (A1);
       \path (CA) edge (A2);
     \end{tikzpicture}
-    \caption{The GMTree holds information about $CA$, $A1$ and $A2$. Hangingedges = [].}
+    \caption{$CA$ and its children $A1$, $A2$ are added to GMTree. Hangingedges = [].}
   \end{subfigure}
 
   \begin{subfigure}[t]{0.5\textwidth}
@@ -290,7 +291,7 @@ The Group Manager class is the primary way of keeping track of nodes that are hi
       \node[main node, group] (CB) [below of=CA] {CB};
       \path (CA) edge node[right] {used} (CB);
     \end{tikzpicture}
-    \caption{Group nodes $B1$ and $B2$ insto composite nodes $CB$. Stored inside the composite node $CB$ is the edges from $CA\rightarrow B1$ and $CA\rightarrow B2$.}
+    \caption{$B1$ and $B2$ are clustered into $CB$. Stored inside $CB$ is the lost edges $CA\rightarrow B1$ and $CA\rightarrow B2$.}
   \end{subfigure}
   ~
   \begin{subfigure}[t]{0.5\textwidth}
@@ -298,11 +299,11 @@ The Group Manager class is the primary way of keeping track of nodes that are hi
     \renewcommand\thesubfigure{C2}
     \begin{tikzpicture}
       \node[] (root) {root};
-      \node[below right = 1cm of root] (CA) {CA};
+      \node[below left = 1cm of root] (CA) {CA};
       \node[below right = 0.5cm of CA] (A1) {A1};
       \node[below left = 0.5cm of CA] (A2) {A2};
 
-      \node[below left = 1cm of root] (CB) {CB};
+      \node[below right = 1cm of root] (CB) {CB};
       \node[below right = 0.5cm of CB] (B1) {B1};
       \node[below left = 0.5cm of CB] (B2) {B2};
       \path (root) edge (CA);
@@ -312,7 +313,7 @@ The Group Manager class is the primary way of keeping track of nodes that are hi
       \path (CB) edge (B1);
       \path (CB) edge (B2);
     \end{tikzpicture}
-    \caption{The GMTree holds information about all nodes. Hangingedges = [].}
+    \caption{GMTree holds information about all nodes. Hangingedges = [].}
   \end{subfigure}
 
   \begin{subfigure}[t]{0.5\textwidth}
@@ -325,8 +326,7 @@ The Group Manager class is the primary way of keeping track of nodes that are hi
       \path (A1) edge node[left] {used} (CB);
       \path (A2) edge node[right] {used} (CB);
     \end{tikzpicture}
-    \caption{CA is ungrouped and removed from the group manager tree. The original edges $A1\rightarrow B1$ and $A2\rightarrow B2$ can not be restored because B1 and B2 aren not in the graph, these edges are stored in the hanging edges object. New edges are created by finding the prent node using the group manager.}
-	\label{fig:clustring-without-groupmanager}
+    \caption{$CA$ is unclustered and removed from GMTree. New edges are created by finding the prent using GMTree.}
   \end{subfigure}
   ~
   \begin{subfigure}[t]{0.5\textwidth}
@@ -334,7 +334,7 @@ The Group Manager class is the primary way of keeping track of nodes that are hi
     \renewcommand\thesubfigure{D2}
     \begin{tikzpicture}
       \node[] (root) {root};
-      \node[below = 1cm of root] (CB) {CB};
+      \node[below right = 1cm of root] (CB) {CB};
       \node[below right = 0.5cm of CB] (B1) {B1};
       \node[below left = 0.5cm of CB] (B2) {B2};
       \path (root) edge (CB);
@@ -355,7 +355,7 @@ The Group Manager class is the primary way of keeping track of nodes that are hi
       \path (A1) edge node[left] {used} (B1);
       \path (A2) edge node[left] {used} (B2);
     \end{tikzpicture}
-    \caption{CB is ungrouped and removed from the group manager tree. An attempt to restore hanging edges is made and both $A1\rightarrow B1$ and $A2\rightarrow B2$ are restored.}
+    \caption{CB is unclustered and removed from the group manager tree. The edges in HangingEdges are restored.}
   \end{subfigure}
   ~
   \begin{subfigure}[t]{0.5\textwidth}
@@ -364,9 +364,9 @@ The Group Manager class is the primary way of keeping track of nodes that are hi
     \begin{tikzpicture}
       \node[] (root) {root};
     \end{tikzpicture}
-    \caption{The GMTree is empty because there's no groups. Hangingedges = [] because the previously stored edges have been restored.}
+    \caption{GMTree is empty Hangingedges = [] because the previously stored edges have been restored.}
   \end{subfigure}
-  \caption{The same example as in Figure~\ref{fig:clustring-without-groupmanager} except this time using the group manager and hanging edges. The group manager stores a tree to track groups and internal nodes as seen on the right hand side. Hanging edges stores a list of edges that have not been restored yet because one or more connected nodes were missing.}
+  \caption{The same example as in Figure~\ref{fig:clustring-without-groupmanager} except this time using the group manager and hanging edges. The group manager stores a tree to track groups and internal nodes as seen on the right hand side. Hanging edges stores a list of edges that could not be restored because one or more connected nodes were missing. After each clustering event an attempt is made at restoring hanging edges.}
 	\label{fig:clustring-with-groupmanager}
 \end{figure}
 
