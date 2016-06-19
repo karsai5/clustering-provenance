@@ -1,11 +1,11 @@
-\newcommand{\multipdf}[3][]{
+\newcommand{\multipdf}[4][]{
 	\label{sec:#2}
-	\includepdf[pages=1,frame=true,width=\linewidth,pagecommand=\section{#2}]{#3}
-	\includepdf[pages=2-#1,frame=true,width=\linewidth]{#3}
+	\includepdf[pages=1,frame=true,width=\linewidth,pagecommand=\section{#2}\label{sec:#3}]{#4}
+	\includepdf[pages=2-#1,frame=true,width=\linewidth]{#4}
 }
 
-\newcommand{\singlepdf}[2]{
-	\includepdf[pages=1,frame=true,width=\linewidth,pagecommand=\section{#1}]{#2}
+\newcommand{\singlepdf}[3]{
+	\includepdf[pages=1,frame=true,width=\linewidth,pagecommand=\section{#1}\label{sec:#2}]{#3}
 }
 
 \begin{appendices}
@@ -15,9 +15,11 @@
 	\printcontents[appendix]{l}{1}{\setcounter{tocdepth}{2}}
 	\renewcommand{\thesection}{\appendixname~\Alph{section}}
 
-	\singlepdf{Provenance Primer}{pdfs/provenance-primer.pdf}
+	\singlepdf{Provenance Primer}{prov_primer}{pdfs/provenance-primer.pdf}
 
-	\multipdf{Interview Questionnaire}{pdfs/questionnaire.pdf}
+	\multipdf{Interview Questionnaire}{interview_questionnaire}{pdfs/questionnaire.pdf}
+
+	\multipdf{Participant Information Sheet}{information_sheet}{pdfs/infosheet.pdf}
 
 	\section{PROV File: Alice's Fitness Score}
 	\label{sec:prov_file_fitness_score}
