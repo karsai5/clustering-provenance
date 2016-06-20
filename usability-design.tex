@@ -96,7 +96,7 @@ This scenario was purely exploration based and no modifications of the graph whe
 \subsubsection{Scenario 2: Citizen Data Report}
 \label{ssub:Scenario 2: Citizen Data Report}
 
-The second exercise involved a larger amount of data and asked participants to imagine themselves as the curator of a citizen science project. Data was been tracked about multiple users and then used in a report that gave feedback on how to improve the cohorts overall fitness. The full paragraph given to participants:
+The second exercise involved a larger amount of data and asked participants to imagine themselves as the curator of a citizen science project. Data was been tracked about multiple users and then used in a report that gave feedback on how to improve the cohorts overall fitness. The full paragraph given to participants was:
 
 \begin{absolutelynopagebreak}
 \begin{framed}
@@ -112,9 +112,9 @@ They were then asked to compete the following tasks.
 	\item You want to show Alice how her information is been used by sharing an image of the provenance with her that illustrates the lineage of the citizen report and how her data influences it. You don’t want Alice to see details about other people in the cohort. 
 \end{enumerate}
 
-The first task just required that the user describe the graph to me. This did two things: it let me check that the user was correctly interpreting the information stored in the graph as well as forcing users to study and understand the graph (in early tests of this study without this question users would make mistakes later because of poor understanding of the graph).
+The first task just required that the user describe the graph verbally to me. This did two things: it let me check that the user was correctly interpreting the information stored in the graph as well as forcing users to study and understand the graph (in early tests of the study without this question users would make mistakes later because of poor understanding of the graph).
 
-Similar to exercise one the first task asked the user to describe the contents of the graph. Following from there was two tasks that required the user cluster nodes in order to hide information. Because un-clustering was required to complete the first task users where accustomed to the concept of clustering nodes by the time they got to this task.
+The second task required the user to cluster nodes and in some cases to rename nodes. This task focused on users \textit{hiding} information. It required 40 nodes to be clustered together so participants sometimes needed prompting towards using the search command. 
 
 \begin{figure}[h]
 	\centering
@@ -127,11 +127,30 @@ Similar to exercise one the first task asked the user to describe the contents o
 \subsubsection{Scenario 3: Twitter Data Report}
 \label{ssub:Scenario 3: Twitter Data Report}
 
-The third and final exercise expanded on the previous by requiring users to convey information by modifying the graph. This is silghtly different to exercise two which required the participant to \textit{hide} information, instead users had to convey a certain point through a graph. Same as above the first task asked the user to describe the graph, a bit more difficult as the graph was abstract compared to the previous two. The following two tasks where of the following format: \textit{You want to modify the graph in order to convey the following information: <information to convey>}. 
+The third and final scenario was basically a duplicate of the second scenario on a more abstract provenance graph. It also focused on getting users to convey certain information through the graph rather than just hiding information. The provenance given to the user was that of a advice-report concerning information from multiple twitter feeds. The paragraph given to participants was: 
 
-\begin{flushleft}
+\begin{framed}
 This provenance graph is an abstract representation of a report based on twitter data. 
-\end{flushleft}
+\end{framed}
+
+They were then asked to complete the following tasks:
+
+\begin{enumerate}
+	\item Describe the graph to me
+	\item You want to modify the graph in order to convey the following information to a non-technical user: An advice report was created using data from 3 other reports based on twitter data from two different users. 
+	\item You want to show to user X that their data was used in the advice report by sharing an image of the provenance with them. Modify the graph to best represent this information. 
+\end{enumerate}
+
+Same as scenario two the first task was used as a way of letting me check the user correctly understood the graph. The second and third tasks are a little different. They focus on asking the user to convey information by simplifying the graph. Compared to scenario two the results of these tasks a much more different from user to user. This seems to be related to different people explaining things different ways, it seemed that people who read graphs a lot were happy to leave the graph (seen in Figure~\ref{fig:exercise3}) the way it was because they could easily read information from it. 
+
+The reasoning behind having this scenario similar to scenario two is that if the user required a large amount of prompting the complete scenario two then this gives them a chance to complete a clustering task without the help of the supervisor. If the user had managed to successfully cluster in scenario two then we got information about how they conveyed information. 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\linewidth]{exercise3}
+	\caption{The provenance graph used in scenario 3 showing the lineage of a report on twitter data. This is a more abstract provenance graph and shows twitter data from three raw streams been analysed intro three reports and finally used in a single \textit{advice-report}.}
+	\label{fig:exercise3}
+\end{figure}
 
 \section{Study Results}
 \label{sec:study_results}
