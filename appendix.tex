@@ -33,5 +33,193 @@
 	
 	\lstinputlisting[style=provn]{provn/IR-baseline.provn}
 
+	\section{Concrete codes}
+	\label{sec:concrete_codes}
+
+\begin{table}[H]
+	\centering
+	\def\arraystretch{1.5}
+	\caption{List of question codes and descriptions of each.}
+	\label{tab:question-codes}
+	\begin{tabu} to \textwidth { | l | X[l] | }
+		\hline
+		\textbf{Code}& \textbf{Description}  \\	
+		\hline
+		\hline
+		grouping & Activities that involved users grouping or ungrouping nodes (by any means)\\
+		\hline
+		grouping-group &  When a user grouped a node \\
+		grouping-ungroup & When a user ungrouped a node \\
+		grouping-complex & When a user grouped a complex set of noes \\
+		\hline
+		\hline
+		graph & Activities related to understanding a graph conceptually \\
+		\hline
+		graph-explain & Notice and comment on information in the graph. An example is in exercise one where some users noticed that weight data is both manually and automatically logged. This information is not usually relevant to the question. \\
+		graph-understanding & Correctly understand a concept from the graph, usually directly in response to a question. \\
+		\hline
+		\hline
+		lineage & Correctly identifying information related to the lienage of a node. \\
+		\hline
+		lineage-identify & Correctly identified simple lineage. \\
+		lineage-implied & Correctly identified lineage passing through multiple entities. \\
+		lineage-complex & Correctly identified lineage that was complex, usually identifying multiple nodes. \\
+		\hline
+		\hline
+		interface & When a user uses a specific bit of the ProvOwl interface. \\
+		\hline
+		interface-export-image & Using the export -> image menu item to save an image of a graph.\\
+		interface-os-screenshot & Using the operating system screenshot functionality to save an image of a graph. \\
+		interface-rename & Using the rename function (found in the contexual links in a nodes details) to rename a node. \\
+		interface-manual-group & Manually group nodes by ctrl+clicking multiple nodes and selecting \textit{group nodes} from the contexual menu. \\
+		interface-search-group & Grouping nodes by searching for the nodes they want to use using the search function and then grouping them. \\
+		\hline
+		\hline
+		privacy & Whether a user was privacy concious at all in relation to personal data. \\
+		\hline
+ 
+	\end{tabu}
+\end{table}
+
+	\def\arraystretch{1.5}
+	\begin{longtabu} to \textwidth { | l | X[l] | l | }
+	\caption{Scenario one subtasks}
+	\label{my-label}
+	\hline
+	\textbf{Exercise} & \textbf{Question/activity} & \textbf{Code} \\
+	\hline
+1 & What data about you is used to calculate your score? &  \\
+	\hline
+1.1 & weight\_scale\_data & lineage-identify \\
+1.2 & weight\_manual\_data & lineage-identify \\
+1.3 & weight\_goal & lineage-identify \\
+1.4 & step\_tracker\_data & lineage-identify \\
+1.5 & step\_goal & lineage-identify \\
+1.6 & question alice was attributed to fitbit\_score & lineage-implied \\
+1.7 & notice manual and automatic logging was used & explain \\
+1.8 & ungrouped nodes & graph-explain \\
+	\hline
+2 & Identify what aspects of the provenance graph map to your fitness dashboard. &  \\
+	\hline
+2.1 & raw\_scale & graph-understanding \\
+2.2 & raw\_steps & graph-understanding \\
+2.3 & fitness\_score & graph-understanding \\
+2.4 & ungrouped nodes & grouping-ungroup \\
+	\hline
+3 & What processes does your raw step data go through before been used to calculate the fitbit\_score? &  \\
+	\hline
+3.1 & step\_transformer & lineage-identify \\
+3.2 & step\_data & lineage-identify \\
+3.4 & step\_analyser & lineage-complex \\
+3.5 & step\_achievement & lineage-identify \\
+3.6 & score\_generator & lineage-identify \\
+3.7 & fitness\_score & lineage-identify \\
+3.8 & ungrouped nodes & grouping-ungroup \\
+	\hline
+4 & How do you expect your raw fitbit data would be represented once it got to score\_generator? &  \\
+	\hline
+4.1 & understands data transformation & graph-understanding \\
+4.2 & not at all & graph-understanding \\
+4.3 & in anonymalised form & graph-understanding \\
+4.4 & ungrouped nodes & grouping-ungroup \\
+	\hline
+5 & What processes does your Withings scale data go through before been used to calculate the fitbit\_score? &  \\
+	\hline
+5.1 & aggregated & lineage-identify \\
+5.2 & analysed & lineage-identify \\
+5.3 & algorithm to determine sucess & lineage-identify \\
+5.4 & ungrouped nodes & grouping-ungroup \\
+5.5 & identified manual and automatic input & graph-explain \\
+	\hline
+6 & How do you expect your weight data would be represented once it got to score\_generator? &  \\
+	\hline
+6.1 & understands data transformation & graph-understanding \\
+6.2 & not at all & graph-understanding \\
+6.3 & in anonymalised form & graph-understanding \\
+6.4 & ungrouped nodes & grouping-ungroup \\
+	\hline
+7 & Are you concerned about how you data is used to calculate the fitbit score. Explain your reasoning. &  \\
+	\hline
+7.1 & Worried about weighting & graph-explain \\
+7.2 & Worried about privacy & privacy \\
+7.3 & Not-concerned & privacy \hline
+\end{longtabu}
+
+\def\arraystretch{1.5}
+\begin{longtabu} to \textwidth { | l | X[l] | l | }
+\caption{Scenario two subtasks}
+\label{my-label}
+\hline
+\textbf{Exercise} & \textbf{Question/activity} & \textbf{Code} \\
+\hline
+1 & Describe the graph to me &  \\
+\hline
+ & people with identical data & lineage-identify \\
+ & cohort data anonimised & lineage-identify \\
+ & averages created from anonymised cohort & lineage-identify \\
+ & two reports created & lineage-identify \\
+ & citizen-science-report based on two reports & lineage-identify \\
+ & grouping with simple filter & interface-search-group \\
+ & groupin manually & interface-manual-group \\
+\hline
+2 & You want to share how the report was generated with a colleague however you want to hide information about the cohort for privacy. Modify the graph in order to hide identifying information about participants. & group \\
+\hline
+ & Group nodes & grouping-group \\
+ & ungroup nodes & grouping-ungroup \\
+ & silmple filter & interface-search-group \\
+ & rename nodes & interface-rename \\
+ & export image & interface-export-image \\
+ & screenshot image & interface-os-screenshot \\
+ & groupin manually & interface-manual-group \\
+\hline
+3 & You want to show Alice how her information is been used by sharing an image of the provenance with her that illustrates the lineage of the citizen report and how her data influences it. You don’t want Alice to see details about other people in the cohort. &  \\
+\hline
+ & Group nodes & grouping-group \\
+ & ungroup nodes & grouping-ungroup \\
+ & silmple filter & interface-search-group \\
+ & rename nodes & interface-rename \\
+ & export image & interface-export-image \\
+ & screenshot image & interface-os-screenshot \\
+ & grouping with simple filter & interface-search-group \\
+ & groupin manually & interface-manual-group
+\hline
+\end{longtabu}
+
+\def\arraystretch{1.5}
+\begin{longtabu} to \textwidth { | l | X[l] | l | }
+\caption{Scenario three subtasks}
+\label{my-label}
+\hline
+\textbf{Exercise} & \textbf{Question/activity} & \textbf{Code} \\
+\hline
+1 & Describe the graph to me &  \\
+\hline
+ & multiple twitter feeds & lineage-identify \\
+ & twitter feeds have data from different days & interface-details \\
+ & data from two users & lineage-identify \\
+ & three reports & lineage-identify \\
+ & adive-report created using data from three reports & lineage-identify \\
+\hline
+2 & You want to modify the graph in order to convey the following information to a non-technical user: An advice report was created using data from 3 other reports based on twitter data from two different users. &  \\
+\hline
+ & rename nodes & interface-rename \\
+ & export image & interface-export-image \\
+ & grouping X data & grouping-group \\
+ & grouping Y data & grouping-group \\
+ & grouping twitter feeds & grouping-complex \\
+ & grouping with simple filter & interface-search-group \\
+ & groupin manually & interface-manual-group \\
+\hline
+3 & You want to show to user X that their data was used in the advice report by sharing an image of the provenance with them. Modify the graph to best represent this information. &  \\
+\hline
+ & rename nodes & interface-rename \\
+ & export image & interface-export-image \\
+ & grouping with simple filter & interface-search-group \\
+ & groupin manually & interface-manual-group \\
+ & group y data & grouping-complex \\
+ & hide report 3 & grouping-complex
+\hline
+\end{longtabu}
+
 \end{appendices}
 

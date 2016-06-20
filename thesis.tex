@@ -4,6 +4,7 @@
 \usepackage[toc]{appendix}
 \usepackage[utf8]{inputenc}
 \usepackage{amsfonts}
+\usepackage{multirow}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{caption} 
@@ -12,6 +13,7 @@
 \usepackage{float}
 \usepackage{framed}
 \usepackage{fullpage}
+\usepackage{longtable}
 \usepackage{titletoc}
 \usepackage{graphicx}
 % use showframe if you want to see outlines
@@ -68,7 +70,7 @@
 \DeclareUnicodeCharacter{00A0}{ }
 \newcommand*\rot{\rotatebox{90}}
 \makeatletter
-\newcommand{\@chapapp}{\relax}%
+% \newcommand{\@chapapp}{\relax}%
 \makeatother
 \graphicspath{ {images/} }
 \setlength{\parskip}{\baselineskip}%
@@ -86,6 +88,7 @@
 	->,>=stealth',shorten >=1pt,auto,node distance=3cm,
 	thick,main node/.style={ellipse,fill=nodeyellow,draw,font=\sffamily\normalsize}
 }
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;} 
 
 % give captions a bit of space.
 \captionsetup[sub]{margin=5pt, skip=10pt}
@@ -134,8 +137,6 @@
 \include{prototype} % technical implementation decisions
 
 \include{usability-design} % plan of question coding etc.
-
-\section{Results} % results
 
 \include{conclusion}
 
