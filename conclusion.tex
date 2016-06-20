@@ -1,95 +1,19 @@
 \chapter{Conclusions and Discussion} % discussion and future work
+
+Provenance is a type of metadata representing the lineage of a digital object. In the field of personal data management this could be used to help users understand how their personal data is used, an issue that is particulary relevant as we store more and more information about ourselves. The problem is that raw provenance is too difficult to understand and the current industry standard for visualising it (directed acyclic graphs) is still too complex for non technical users (and in a lot of cases technical users). 
+
+To solve this problem I designed two methods for manually clustering nodes, \textit{ctrl+click} and search clustering. Clustering could then be used to simplify provenance graphs in order to hide irrelevant information or focus attention on certain areas of a provenance graph, for example how a single users information was used in a report. I then implemented a working prototype so that a usability study could be conducted on the usability and effectiveness of each clustering technique. Using both a thing aloud study (the gold standard of usability feedback) and a SUS questionnaire (one of the most widely used questionnaires) I conducted a comprehensive usability study on the ProvOwl application. 
+
+The results from the usability study showed that after been prompted to the existence of the clustering function users would use both the \textit{ctrl+click} and search clustering methods in order to simplify graphs. After a small amount of time users were comfortable and confident using the interface to modify graphs to convey meaning, indicating that ProvOwl is a usable interface for clustering graphs.
+
+
+
 \section{Future Work}
-The prototype source code is available on GitHub\footnote{\url{https://github.com/karsai5/ProvOwl}}. The interface is also available online where you can test it with a sample graph\footnote{\url{http://provowl.com/?file=/prov-examples/provn/threenode.provn}}.
-We describe features under development to improve usability.
 
-We propose to create a regular expression language to select nodes, as mentioned in the section on challenges. 
-This will enable users to select nodes in cases such as:
-(i) Select all nodes with the name ``*Feed''
-(ii) Select all nodes \textit{not} influencing the ``Summarize'' node
-(iii) Select all children of ``Fitness-Summary''.
-For large graphs, this could allow for faster user-directed simplification of a graph. 
+In the future it would be useful to expand on some of ProvOwl's features as well as implementing some of the other clustering techniques recommended by users in the think aloud study. I would then propose to re-conduct the usability studies and in particular the SUS questionnaire to see if the same divide in results appears.
 
-As an extension of this, the language should describe parametered clustering, so users ask for multiple similar clusters to be formed. For example ``Create clusters from nodes the same depth from the root'' or even using data inside the nodes ``Create clusters from nodes that have the same creation date''.  
+Future challenges involve allowing users to search for all nodes that match one regex but not another. It would also be useful to only match searches on particular properties of a node, for example a user may only want to match their search on \textit{author} of a node. Many users during usability studying requested the ability to cluster all the children of a node, extending from this it would also be useful to allows user to cluster based on a nodes relationships with other nodes, for example ``Cluster all nodes that match the following regex \texttt{X-tweets|query-X-Time} and are not derived from \texttt{TwitterFeed-time-3}. As mentioned in the think aloud results (\ref{sub:think_alouds}) it would also be useful to have a feature that lets users draw a box over the nodes they want to cluster.
 
-This could also impact the way nodes are automatically named. If the user created clusters from nodes that all have the same creation date, the system may infer that the name for the new node should include the creation date.
+In the future I would also like to expand on the export abilities of the prov owl application to allow exporting in the PROV-N standard. This would allow sharing of provenance graphs with manually created clusters. This would also xxxx expanding the current provenance standard to include syntax for representing nodes that are clustered together.
 
-We also wish to extend the PROV standard to include descriptions of cluster nodes. This would allow a user to cluster nodes manually, export the PROV file with cluster descriptions and then share with someone else. This \textit{extraction}, being able to export your current state of exploration, would allow further exploration from the current state later on or even sharing with other users for further analysis.
-
-\subsection{False Dependencies}
-\label{sec:section_name}
-
-In essense clustering is a simple type of graph rewriting that creates an abstraction of a graph and in turn simplifies deatails. This can cause some anomolies such as false dependencies, circular dependencies and mislabelled relationships. 
-
-A false dependency is when a clustering in the graph has caused a newly implied line of linage that falsly suggests that one enetity had influence upon another. This is in violations of the main assumption that provenance records the factual history of data derivation. The opposite of this, removing a dependency, is not such an issue because it is understood that the ability to observe data trasnformations is limited so therefore all provenaance graphs are expected to be partially incomplete. In Figure~\ref{fig:falsedependencies} you can see a simple example that shows a false dependency caused by joinging nodes \texttt{B1} and \texttt{B2} together. It creates a new line of lineage that falsly implies \texttt{A1} and \texttt{A2} where influenced by \texttt{C1} and \texttt{C2}. Technical consequences of false dependencies also include unnecessary checks and recomputation when revisiting dependent entities to reflect corrected or changed source data. For example if the data in \texttt{C1} was found to be incorrect it would be necessary to follow the lineage up to find what entities need to be recomputed, in the case of Figure~\ref{fig:} (B) this would include both \texttt{A1} and \texttt{A2}.
-
-\begin{figure}[H]
-	% TODO fix graph
-  \begin{subfigure}[t]{0.5\textwidth}
-    \centering
-    \begin{tikzpicture}
-      \node[main node] (root) {root};
-	  \node[main node] (A1) [below left of=root] {A1};
-      \node[main node] (A2) [below right of=root] {A2};
-      \node[main node] (B1) [below of=A1] {B1};
-      \node[main node] (B2) [below of=A2] {B2};
-      \node[main node] (C1) [below of=B1] {C1};
-      \node[main node] (C2) [below of=B2] {C2};
-      \path (A1) edge node[left] {used} (B1);
-      \path (A2) edge node[left] {used} (B2);
-      \path (B1) edge node[left] {used} (C1);
-      \path (B2) edge node[left] {used} (C2);
-      \path (root) edge node[left] {used} (A1);
-      \path (root) edge node[right] {used} (A2);
-    \end{tikzpicture}
-    \caption{A small example provenance graph that shows two main lines of lineage from the root.}
-  \end{subfigure}
-  ~
-  \begin{subfigure}[t]{0.5\textwidth}
-    \centering
-    \begin{tikzpicture}
-      \node[main node] (root) {root};
-      \node[main node] (A1) [below left of=root] {A1};
-      \node[main node] (A2) [below right of=root] {A2};
-	  \node[main node, group] (CB) [below = 2cm of A1] {B group};
-      \node[main node] (C1) [below = 5cm of A1] {C1};
-      \node[main node] (C2) [below = 5cm of A2] {C2};
-      \path (CB) edge node[left] {used} (C1);
-      \path (CB) edge node[right] {used} (C2);
-      \path (A1) edge node[left] {used} (CB);
-      \path (A2) edge node[right] {used} (CB);
-      \path (root) edge node[left] {used} (A1);
-      \path (root) edge node[right] {used} (A2);
-    \end{tikzpicture}
-	\caption{Nodes \texttt{B1} and \texttt{B2} are clustered into the \texttt{B group} composite node.}
-  \end{subfigure}
-	\label{fig:falsedependencies}
-	\caption{When \texttt{B1} and \texttt{B2} are clustered together it creates a false line of lineage that suggests that \texttt{A2} was influenced by \texttt{C2}, this is known as a false dependency.}
-\end{figure}
-
-Circular dependencies are another animality that may also occur. This means that the graph is no longer a directed acyclic graph and can cause issues with algorithms that assume the graph is acyclic. It is also in direct violation of the constraints defined in the PROV-CONSTRAINTS W3C document~\cite{}. Figure~\ref{} shows an example of a circular dependency between \texttt{Fitness-Summary group} and \texttt{Summarize}.
-
-The last anomaly that we noticed was that of mislabelled relationships. The labels used to label relationships are specific to the types of nodes the edge is connecting. For example an Entity \textit{was generated by} and Activity, or an Activity was \textit{used} by an Entity. Clustering creates a fourth node type in conjunction with the existing three (Activity, Entity and Agent) and doesn't have any limitation to the labls that can be used on relationships associated with it. This can be confusing to users and can also reveal information about nodes inside a cluster (a used relationship to a cluster node says that there's an entity inside of it). There's also the case of when clustered nodes created multiple relationhips to nodes in common, which relationship label should be picked to represent the relationship? At the moment ProvOwl arbitarily selects one. 
-
-A theoretical formulation of provenance abstraction by clustering has been proposed in~\cite{Missier2014} to discuss this and other problems that occur in clustering, along with simple algorightms for grouping arbitary sets of nodes. In essense the work showed that to avoid false dependencies one must compute a \textit{closure} operation that extends the user-selected nodes with all other nodes that sit on any path amongst these inisial clustering nodes. Combining this work with our user-oriented provenance navigation system can lead to a working correct clustering mechanism. Expanding on the work of this interface to help the user cluster without creating graph anomolies is a challenge we hope to tackle in the future.
-
-\subsection{More powerful regex search}
-\label{sec:more_powerful_regex_search}
-
-The challenge is how to create a method for allowing users to cluster a large number of nodes without losing the fine grained control of the above process. We decided to implement a naive search function that runs a regex query on all the properties of a node and hilights any nodes with matching properties.
-
-Future challenges involve allowing users to search for all nodes that match one regex but not another. It would also be useful to only match searches on particular properties of a node, for example a user may only want to match their search on \textit{author} of a node (assuming that property exists\footnote{Breifly discussed in the introduction, the PROV standard allows an arbitraty number of key value properties to be attributed to a node.}). Many users during usability studying requested the ability to cluster all the children of a node, extending from this it would also be useful to allows uers to cluster based on a nodes relationships with other nodes, for example ``Cluster all nodes that match the following regex \texttt{X-tweets|query-X-Time} and are not derived from \texttt{TwitterFeed-time-3}.
-
-Possiblty the biggest challenge in this section would be that of paramaterised clustering. Where a single action by the user would create mutliple clusters. A common clustering we found while studying participants was selecting the entity and the actitvity and creating a composite node of them. In Figure~\ref{fig:search1} they would cluster \texttt{[X-tweets-1, query-X-time-1]}, \texttt{[X-tweets-2, query-X-time-2]} and \texttt{[X-tweets-3, query-X-time-3]} into seperate composite nodes. This would be an ideal use of a paramaterised language that would allow the user to ``group all X-tweets with their corosponding query-X-Time'', however creating a language that is both powerfl and easy to learn and use will be quite a challenge.
-
-A possible future endevour would be automation of clustering. Where the application woudl suggest clusterings based on previous provenance workloads. It may then group together infrequently accessed nodes to make it easier to access infrequently used nodes.
-
-\subsection{Sharing graphs}
-\label{sub:sharing_graphs}
-
-In the future I would also like to be able to export the current graph in PROV format with notation for clustered nodes.
-
-\subsection{Server side computation}
-\label{sub:server_side_computation}
-
-Server side computation may be a useful feature for the future, a server with higher computational power and resources may be able to find and analyze interesting details about a file. A simple approach to accomplish this would to have the file uploaded to the server, analytics run on the provenance and then results loaded back to the client. For larger provenance files this could be extended to only load sections required for analysis reducing the bandwidth required. The client could render the provenance locally whilst results where computed and then rendered onto the already drawn graph. This would allow the user to begin exploring the graph with minimal delay while extra information is calculated server side.
+Lastly, server side computation may be a useful feature for the future, a server with higher computational power and resources may be able to find and analyse interesting details about a file. This could also be used to explore incredibly large provenance files. By having the graph loaded server side and only sections required sent to the client, the computational load on the client could be greatly reduced.

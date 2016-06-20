@@ -13,7 +13,7 @@ I decided to conduct a think aloud study with participants while using the ProvO
 ``In a thinking aloud test, you ask test participants to use the system while continuously thinking out loud — that is, simply verbalizing their thoughts as they move through the user interface.'' 
 \end{quote}
 
-Participants are encouraged to ``think aloud'' as they complete tasks to give incite into what they are thinking. I selected this approach for a number of reasons. Firstly, it has been used successfully for a long time. \citeauthor{nielsen1994} describes it as ``...the single most valuable usability engineering method.'' in his 1993 book \citetitle{nielsen1994}~\cite{nielsen1994}. Secondly, it requires a small number of users to get meaningful results. A post written in 2012 by \citeauthor{nielsen1994} describes why you only need to test with five users\footnote{Thinking Aloud: The #1 Usability Tool: \url{https://www.nngroup.com/articles/thinking-aloud-the-1-usability-tool/}}. And lastly, I have conducted think aloud studies previously, so they are a natural first thought to me when gauging how usable an interface is.
+Participants are encouraged to ``think aloud'' as they complete tasks to give incite into what they are thinking. I selected this approach for a number of reasons. Firstly, it has been used successfully for a long time. \citeauthor{nielsen1994} describes it as ``...the single most valuable usability engineering method.'' in his 1993 book \citetitle{nielsen1994}~\cite{nielsen1994}. Secondly, it requires a small number of users to get meaningful results. A post written in 2012 by \citeauthor{nielsen1994} describes why you only need to test with five users\footnote{Thinking Aloud: The \#1 Usability Tool: \url{https://www.nngroup.com/articles/thinking-aloud-the-1-usability-tool/}}. And lastly, I have conducted think aloud studies previously, so they are a natural first thought to me when gauging how usable an interface is.
 
 Below I discuss the general format of the interviews and then in detail each of the scenarios users undertook and the tasks associated with each. The entire questionnaire I used for conducting the interviews can be seen at \ref{sec:interview_questionnaire}.
 
@@ -64,7 +64,7 @@ Suppose you are Alice. You have been using your FitBit and Withings scales for 3
 \end{framed}
 
 They were then asked to complete the following tasks, all of which required only a verbal answer.
-\begin{enumerate}
+\begin{enumerate}[label=\arabic*.]
 	\item What data about you is used to calculate your score?
 	\item Identify what aspects of the provenance graph map to your fitness dashboard.
 	\item What processes does your raw step data go through before been used to calculate the fitbit\_score?
@@ -74,7 +74,7 @@ They were then asked to complete the following tasks, all of which required only
 	\item Are you concerned about how you data is used to calculate the fitbit score. Explain your reasoning. 
 \end{enumerate}
 
-The provenance graph they were given to answer these tasks can be seen in Figure~\ref{fig:exercise1a}. It can be seen from the light blue circles that this included composite nodes. I did this so that users were required to uncluster nodes (either by double clicking or selecting ``ungroup'' from the contexual commands) in order to properly answer the tasks. This meant that users were introduced to the idea of clustering before having to create them themselves in later tasks. These tasks also allowed the user to get used to reading provenance graphs. Questions C,D and E,F mirror each other so that if the user had difficulty understanding the way lineage worked in tasks C,D, requiring prompting. They could then accomplish D,E on their own. The last question G was simply a way of gauging what users found important, whether they where concerned about privacy or transparency in calculations.
+The provenance graph they were given to answer these tasks can be seen in Figure~\ref{fig:exercise1a}. It can be seen from the light blue circles that this included composite nodes. I did this so that users were required to uncluster nodes (either by double clicking or selecting ``ungroup'' from the contexual commands) in order to properly answer the tasks. This meant that users were introduced to the idea of clustering before having to create them themselves in later tasks. These tasks also allowed the user to get used to reading provenance graphs. Questions 3,4 and 5,6 mirror each other so that if the user had difficulty understanding the way lineage worked in tasks 3,4, requiring prompting, they could then accomplish 5,6 on their own. The last question 7 was simply a way of gauging what users found important, whether they where concerned about privacy or transparency in calculations.
 
 This scenario was purely exploration based and no modifications of the graph where required in order to complete the tasks.
 
@@ -106,7 +106,7 @@ You are a researcher creating a citizen-data-report that recommends strategies f
 
 They were then asked to compete the following tasks. 
 
-\begin{enumerate}
+\begin{enumerate}[label=\arabic*.]
 	\item Describe the graph to me
 	\item You want to share how the report was generated with a colleague however you want to hide information about the cohort for privacy. Modify the graph in order to hide identifying information about participants. Then save an image of it. Note: try using the filter function for grouping multiple nodes
 	\item You want to show Alice how her information is been used by sharing an image of the provenance with her that illustrates the lineage of the citizen report and how her data influences it. You don’t want Alice to see details about other people in the cohort. 
@@ -135,7 +135,7 @@ This provenance graph is an abstract representation of a report based on twitter
 
 They were then asked to complete the following tasks:
 
-\begin{enumerate}
+\begin{enumerate}[label=\arabic*.]
 	\item Describe the graph to me
 	\item You want to modify the graph in order to convey the following information to a non-technical user: An advice report was created using data from 3 other reports based on twitter data from two different users. 
 	\item You want to show to user X that their data was used in the advice report by sharing an image of the provenance with them. Modify the graph to best represent this information. 
@@ -152,50 +152,104 @@ The reasoning behind having this scenario similar to scenario two is that if the
 	\label{fig:exercise3}
 \end{figure}
 
+\subsection{Task Coding}
+\label{sub:coding_tasks}
+
+To help with analysing the results from the think aloud study the tasks were coded to represent what \textit{conceptual} activity and \textit{concrete} actions the user was expected to perform. 
+
+The coding was used to identify what high level activity the user was accomplishing, for example if the task asked to trace the lineage of an entity this would accomplish the conceptual activity of \textit{identifying lineage}. There was five conceptual tasks the user had to perform to complete all the tasks: \textit{Understanding lineage:} The user had to be able to understand how lineage flowed through a provenance graph. \textit{Un-clustering Nodes:} The under had to uncluster nodes. \textit{Cluster Nodes:} The user had to cluster nodes (via either method). \textit{Hide information:} The user had to hide information from a provenance graph. \textit{Highlight Information:} Hiding information in a provenance graph. In Table~\ref{tab:conceptual_activities} is a list of each scenario, corresponding tasks and what conceptual activity it accomplishes. From this table we can see that scenario one focuses primarily on ensuring that users conceptually understand the concept of lineage, particularly tracing lineage. It also gives the user a change to uncluster nodes. Scenarios two and three then focus on hiding nodes and highlighting information, although note that both include a preliminary task that verifies the users understanding of lineage.
+	
+	
+\begin{table}[h]
+	\centering
+	\caption{This shows when uses were given the opportunity to accomplish different high level concepts.}
+	\def\arraystretch{1.5}
+	\label{tab:conceptual_activities}
+	\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+	\hline
+	\multirow{2}{*}{} & \multicolumn{7}{l|}{Scenario 1} & \multicolumn{3}{l|}{Scenario 2} & \multicolumn{3}{l|}{Scenario 3}\\
+	\cline{2-14}
+	& t1 & t2 & t3 & t4 & t5 & t6 & t7 & t1 & t2 & t3 & t1 & t2 & t3 \\
+	\hline
+	Understand Lineage & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark& & \checkmark&& & \checkmark&& \\
+	\hline
+	Un-cluster Nodes & \checkmark & & \checkmark &\checkmark &\checkmark &\checkmark & &&&&&&\\
+	\hline
+	Cluster Nodes &&&&&&&&&\checkmark &\checkmark &&\checkmark &\checkmark \\
+	\hline
+	Hide Information &&&&&&&&&\checkmark &\checkmark &&& \\
+	\hline
+	Highlight Information &&&&&&&&&\checkmark &\checkmark &&\checkmark &\checkmark \\
+	\hline
+	\end{tabular}
+\end{table}
+
+Each task was then given a series of sub tasks that represented things I thought the user would do. For example in task one of scenario one I expected the user would uncluster nodes. Each of these subtasks was also given a concrete code to represent the type of action the user was accomplishing. Using the example before of unclustering nodes, this would have the concrete code of \textit{grouping-ungroup}. A full list of the sub tasks and concrete codes can be found at ~\ref{sec:concrete_codes}. These subtasks where printed on the survey sheet for easier analysis. It meant that in conjunction with qualitative feedback I also had quantitative results related to how often users completed certain concrete actions (like using  part of the interface or following a line of lineage).
+
+
 \section{Study Results}
 \label{sec:study_results}
 
+I conducted the study on five users. The gender balance was 60\% male and 40\% female. All participants were between 15 and 44 and they had all completed some level of tertiary education (either a bachelors or masters degree). Of the five people interviewed two of them had heard of the term provenance before, one describing it as ``something to do with the history of a file''. Below I discuss the results from the think aloud and then the results from the SUS survey.
+
+\subsection{Think Alouds}
+\label{sub:think_alouds}
+
+In the first scenario it was required that the participant uncluster nodes in order to view entities required for the tasks. Participants had trouble realising that nodes were hidden inside the composite nodes and three of the users required prompting so that they would uncluster nodes. As users continued through these tasks their ability to read lineage to improved. In task C ``What processes does your raw step data go through before been used to calculate the fitbit\_score?'' two of the users required prompting and none of the users successfully identified every entity that the step data passes through. However by task E ``What processes does your Withings scale data go through before been used to calculate the fitbit\_score?'' users were able to successfully complete the tasks with no prompting and identify all the entities Withings scale data passes through. This suggests that by the end of scenario one users were able to successfully trace lineage through the application. Interestingly the clickdata shows that the most common action in this scenario was moving nodes around even though it wasn't required to complete any of the tasks. This could be attributed to users playing around with the system, they seemed to enjoy been able to drag nodes around the screen. Most users intuitively realised that double clicking a composite node would uncluster it, this technique was used three times more often that selecting ungroup from the contextual links in the details panel.
+
+The second scenario involved around 50 nodes (compared to 16 for the first). Every participant commented on the size of the graph ``Gasp'', ``That's more complicated looking!''. As a lead on from the previous scenario it seemed that participants had a sound understanding of provenance by this stage as all participants identified 80\% of the important graph elements when asked to describe the graph. In the first grouping task S2t2 most users required some sort of prompting in order to cluster nodes, whether by been explicitly described the process or just minor points in the right direction. One participant completed the tasks without any help. Users used a combination of \textit{ctrl+click} grouping (80\%) and search grouping (40\%). Most users (80\%) then renamed nodes in order to hide names of participants. A common mistake made was participants would try to double click a node to rename it, accidentally opening clusters instead. By the third task most users could effectively group without any prompting, with only two of the participants needing help.
+
+In the third scenario all participants completed the first task (describing the graph) without any need for help. Participants also managed to complete the following two tasks without prompting. I did note that some users were happy to leave the graph in its current state for S2t2 so I had to push for them to simplify the graph further, suggesting that a ``non-technical'' user may not understand it. Some users had an issue where they would hold down shift while clicking on nodes to try select multiple nodes.
+
+As we can see from Figure~\ref{fig:help-required} participants initially required a lot of help for the beginning of the first scenario. By the seventh task most users were able to complete tasks without any help. Users then needed help for the beginning of the second and third scenario, however after this initial push in the right direction users quickly became confident in using the application. This graph shows that with no training or background knowledge in the field of provenance, a person can start using the ProvOwl system to effectively create clusters. Users never had to be prompted on how to do the same thing twice, in each of the think alouds hints on how to cluster were only given once. This indicates that users had no usability issues clustering once they found the feature. It's also interesting to note that as was hypothesised in the design stage, users used both clustering methods, \textit{ctrl+click} and search, to complete tasks indicating that both methods are relevant and they both fulfil different needs. 
+
+Throughout the study users requested some features they thought would be useful. Its important to note that users may know what they want but they do not know what they need, as Henry Ford said ``If I had asked people what they wanted, they would have said faster horses.'' So it is important to take user suggested features with a grain of salt. However I do believe the following features suggested would be useful to users.
+\textit{Box-select:} this would allow users to drag a box on screen while holding shift in order to select nodes. \textit{Cluster children:} this would allow a user to select a node and cluster all child nodes. I also noticed a lot of users would cluster single entity/activity relations together to simplify nodes, this could be implemented in an auto-simplify feature.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\linewidth]{help-required}
+	\caption{This shows the level of help required for a particular scenario/task. If a participant required a lot of help to complete they were given a success score of 0. If they accomplished the task without any help at all they were given a score of 3. The results graphed here is the mean of all participants.}
+	\label{fig:help-required}
+\end{figure}
+
+\subsection{System Usability Study Questionnaire}
+\label{sub:system_usability_study_questionnaire}
+
+The results from the usability study are divided into two distinct groups. The first group as seen in Table~\ref{tab:sus_high} has a very high SUS score. This places the interface at an usability grade of around A-B\footnote{Notes about interpreting SUS scores can be found in this article: \url{http://www.measuringu.com/sus.php}}, which is the indicator of a very usable interface. Scores of 80 and above are usually the point where users are likely to recommend a product to a friend. These scores could be affected by the backgrounds of the two participants as one had an existing understanding of provenance and the other frequently did data analysis activities such as data mining. 
+
+However there is a second group of much lower scores as seen in Table~\ref{tab:sus_low}, placing the interface at a much lower usability grade. After further analysis of the participants and their interviews it seems that the results may be contributed to lack of sleep in on instance and difficulties interpreting questions in another. User five is the most interesting case because they completed all the tasks without any prompting and still gave the interface an unusually low score of 52.5. I believe this may be because they found some bugs related to how the undo/redo function works and this may have tainted their result.
+
+Overall it is promising to see such high scores from the SUS questionnaire. After implementing some of the user requested features above and fixing the undo/redo bug it would be interesting to see how ProvOwl would score on a larger cohort.
+
 \begin{table}[h]
 	\centering
-	\caption{List of question codes and descriptions of each.}
-		\def\arraystretch{1.5}
-	\label{tab:question-codes}
-	\begin{tabu} to \textwidth { | l | X[l] | }
+	\def\arraystretch{1.5}
+	\caption{This higher scoring group can be contributed to the users backgrounds.}
+	\label{tab:sus_high}
+	\begin{tabu} to \textwidth {|c|c|X[l]|}
 		\hline
-		\textbf{Code}& \textbf{Description}  \\	
-		\hline
-		\hline
-		grouping & Activities that involved users grouping or ungrouping nodes (by any means)\\
-		\hline
-		grouping-group &  When a user grouped a node \\
-		grouping-ungroup & When a user ungrouped a node \\
-		grouping-complex & When a user grouped a complex set of noes \\
+		\textbf{User}&\textbf{Score}&\textbf{Notes} \\
 		\hline
 		\hline
-		graph & Activities related to understanding a graph conceptually \\
+		1 & 75 & Background in IT research, frequently explores and mines information on a daily basis. Logs information about themselves.\\
+		2 & 85 & Strong understanding of digital provenance.\\\hline
+	\end{tabu}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\def\arraystretch{1.5}
+	\caption{This lower scoring group seems to be contributed to a number of reasons.}
+	\label{tab:sus_low}
+	\begin{tabu} to \textwidth {|c|c|X[l]|}
 		\hline
-		graph-explain & Notice and comment on information in the graph. An example is in exercise one where some users noticed that weight data is both manually and automatically logged. This information is not usually relevant to the question. \\
-		graph-understanding & Correctly understand a concept from the graph, usually directly in response to a question. \\
-		\hline
-		\hline
-		lineage & Correctly identifying information related to the lienage of a node. \\
-		\hline
-		lineage-identify & Correctly identified simple lineage. \\
-		lineage-implied & Correctly identified lineage passing through multiple entities. \\
-		lineage-complex & Correctly identified lineage that was complex, usually identifying multiple nodes. \\
-		\hline
-		\hline
-		interface & When a user uses a specific bit of the ProvOwl interface. \\
-		\hline
-		interface-export-image & Using the export -> image menu item to save an image of a graph.\\
-		interface-os-screenshot & Using the operating system screenshot functionality to save an image of a graph. \\
-		interface-rename & Using the rename function (found in the contexual links in a nodes details) to rename a node. \\
-		interface-manual-group & Manually group nodes by ctrl+clicking multiple nodes and selecting \textit{group nodes} from the contexual menu. \\
-		interface-search-group & Grouping nodes by searching for the nodes they want to use using the search function and then grouping them. \\
+		\textbf{User}&\textbf{Score}&\textbf{Notes} \\
 		\hline
 		\hline
-		privacy & Whether a user was privacy concious at all in relation to personal data. \\
+		3 & 40 & User was tired (complained about lack of sleep) and sped through the tasks without much thought \\
+		4 & 55 & English was a secondary language, participant had difficulty understanding the explanation of provenance, this also affected their ability to interpret questions. \\
+		5 & 52.5 & Was very competent in use of the application and completed all tasks without prompting. They found some bugs in ProvOwl perhaps influencing their score.\\
 		\hline
- 
 	\end{tabu}
 \end{table}
